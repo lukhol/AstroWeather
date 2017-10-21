@@ -13,8 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
-
-import com.politechnika.lukasz.astroweather.fragments.BlankFragment;
+import com.politechnika.lukasz.astroweather.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.IPermissionHelper;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setFragment(R.id.fragment_container_one, new BlankFragment());
+        setFragment(R.id.fragment_container_one, new MainInfoFragment());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -112,5 +111,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onSunAndMoonButtonClicked(View view){
+        Intent astroInfoActivity = new Intent(this, AstroInfoActivity.class);
+        startActivity(astroInfoActivity);
     }
 }
