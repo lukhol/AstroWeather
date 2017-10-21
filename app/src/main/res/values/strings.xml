@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">AstroWeather</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="storage_permission_prompt">Dawaj permissiony.</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="app_about">App about</string>
+
+    <string name="hello_blank_fragment"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin aliquam cursus lacinia. Ut a tortor a mi scelerisque luctus quis et dolor. Vivamus dictum quam at velit feugiat rhoncus. Praesent imperdiet augue sit amet nibh posuere suscipit. Integer hendrerit dui semper lectus euismod, et pretium tellus sodales. Phasellus porttitor tortor ut justo sollicitudin pellentesque. Praesent egestas rutrum euismod. Maecenas non bibendum ipsum.
+
+Maecenas commodo leo a nibh vestibulum sodales. Vivamus sit amet suscipit ligula, sed fermentum ex. Aliquam erat arcu, sodales ut mauris quis, posuere efficitur nisi. Aliquam quis lectus felis. Suspendisse potenti. Maecenas porta efficitur tortor ut lobortis. Ut risus eros, interdum facilisis eros sed, ultrices dapibus risus. Sed at auctor quam, a sodales elit. Nulla vehicula urna euismod dolor cursus cursus. Ut sodales congue tortor, in volutpat nulla luctus id.
+
+Cras a ligula a tortor lacinia ornare. Aenean finibus semper rutrum. In ac quam ex. Nullam finibus lectus sit amet libero congue congue. Aliquam erat volutpat. In eget dolor ultrices, pretium nibh ac, tincidunt urna. Quisque tempus imperdiet arcu efficitur posuere. Nam aliquam eu tortor quis pulvinar. Vestibulum a justo a ex gravida tempus. Etiam eu ullamcorper est. Nam ut vestibulum est. Nam sed augue tortor. Nullam orci felis, tincidunt et congue id, pharetra vitae magna. Fusce accumsan nulla a erat maximus volutpat. Vivamus tincidunt rutrum metus nec tempus. Praesent tincidunt neque nec tellus bibendum lacinia. </string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="refresh_time_minutes">Refresh time (minutes):</string>
+</resources>

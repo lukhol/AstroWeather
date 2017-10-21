@@ -1,0 +1,184 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/sunTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Moon informations:"
+            android:textColor="@color/textColor"
+            android:textSize="25sp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_moon"
+            android:paddingTop="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@+id/sunTitleTextView"/>
+        <FrameLayout
+            android:id="@+id/frameMoonriseAndSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/frame_background"
+            android:layout_below="@+id/sunTitleTextView"
+            android:padding="5dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/sunriseTimeTitleTextView"
+                    android:layout_width="match_parent"
+                    android:textStyle="bold"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Moon rise and set:"
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/moonriseTimeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:text="-rise time: "
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/moonsetTimeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="-set time: "
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/frameMoonriseAnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/frame_background"
+            android:layout_below="@+id/frameMoonriseAndSet"
+            android:padding="5dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/newAndFullMoonTitleTextView"
+                    android:layout_width="match_parent"
+                    android:textStyle="bold"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="New and full moon:"
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/newMoonTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:text="-new moon date: "
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/fullMoonTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="-full moon date: "
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameMoonPhase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/frame_background"
+            android:layout_below="@+id/frameMoonriseAnd"
+            android:padding="5dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/moonPhaseTitleTextView"
+                    android:layout_width="match_parent"
+                    android:textStyle="bold"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Moon Phase:"
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/moonPhaseTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:text="-illumination: "
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameMoonAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/frame_background"
+            android:layout_below="@+id/frameMoonPhase"
+            android:padding="5dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/moonAgeTitleTextView"
+                    android:layout_width="match_parent"
+                    android:textStyle="bold"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Moon age:"
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/moonAgeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:text="-age: "
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+        </FrameLayout>
+    </RelativeLayout>
+</ScrollView>
