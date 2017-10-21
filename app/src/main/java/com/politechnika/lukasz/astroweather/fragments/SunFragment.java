@@ -31,14 +31,14 @@ public class SunFragment extends Fragment {
     private TextView twilightMorningTextView;
     private TextView twilightEveningTextView;
 
-    //@Inject
+    @Inject
     IAstroCalculatorProvider astroCalculatorProvider;
 
     public SunFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //DaggerApplication.component().inject(this);
+        DaggerApplication.component().inject(this);
         View view = inflater.inflate(R.layout.fragment_sun, container, false);
 
         getFieldsById(view);
@@ -59,8 +59,6 @@ public class SunFragment extends Fragment {
     }
 
     public void updateFiledsText(){
-        astroCalculatorProvider = new AstroCalculatorProvider();
-
         AstroCalculator astroCalculator = astroCalculatorProvider.getAstroCalculator();
         AstroCalculator.SunInfo sunInfo =  astroCalculator.getSunInfo();
 

@@ -2,12 +2,6 @@ package com.politechnika.lukasz.helpers;
 
 import android.content.SharedPreferences;
 
-import static android.content.Context.MODE_PRIVATE;
-
-/**
- * Created by Lukasz on 12.10.2017.
- */
-
 public class SharedPreferenceHelper implements  ISharedPreferenceHelper {
 
     SharedPreferences sharedPreferences;

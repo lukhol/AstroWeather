@@ -1,39 +1,23 @@
 package com.politechnika.lukasz.providers;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
-import com.politechnika.lukasz.helpers.SharedPreferenceHelper;
-
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-/**
- * Created by Lukasz on 14.10.2017.
- */
 
 public class AstroCalculatorProvider implements IAstroCalculatorProvider {
+    @Inject
     ISharedPreferenceHelper sharedPreferenceHelper;
 
     @Override
     public AstroCalculator getAstroCalculator() {
-        sharedPreferenceHelper = new SharedPreferenceHelper();
-        sharedPreferenceHelper.setSharedPreferences(
-                PreferenceManager.getDefaultSharedPreferences(
-                        DaggerApplication.getDaggerApp().getApplicationContext()
-                )
-        );
-
+        DaggerApplication.component().inject(this);
         String latitudeString = sharedPreferenceHelper.getString("latitude", "0");
         String longitudeString = sharedPreferenceHelper.getString("longitude", "0");
 

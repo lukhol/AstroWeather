@@ -1,28 +1,19 @@
 package com.politechnika.lukasz.astroweather.fragments;
 
-import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.AndroidException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.astrocalculator.AstroCalculator;
-import com.astrocalculator.AstroDateTime;
 import com.politechnika.lukasz.astroweather.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.providers.AstroCalculatorProvider;
 import com.politechnika.lukasz.providers.IAstroCalculatorProvider;
 
 import javax.inject.Inject;
 
 public class MoonFragment extends Fragment {
-
-    private View view;
-
     private TextView moonriseTimeTextView;
     private TextView moonsetTimeTextView;
 
@@ -33,15 +24,15 @@ public class MoonFragment extends Fragment {
 
     private TextView moonAgeTextView;
 
-    //@Inject
+    @Inject
     IAstroCalculatorProvider astroCalculatorProvider;
 
     public MoonFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //DaggerApplication.component().inject(this);
-        view = inflater.inflate(R.layout.fragment_moon, container, false);
+        DaggerApplication.component().inject(this);
+        View view = inflater.inflate(R.layout.fragment_moon, container, false);
 
         getFieldsById(view);
         updateFiledsText();
@@ -62,10 +53,6 @@ public class MoonFragment extends Fragment {
     }
 
     public void updateFiledsText(){
-
-        getFieldsById(view);
-
-        astroCalculatorProvider = new AstroCalculatorProvider();
         AstroCalculator astroCalculator = astroCalculatorProvider.getAstroCalculator();
         AstroCalculator.MoonInfo moonInfo =  astroCalculator.getMoonInfo();
 

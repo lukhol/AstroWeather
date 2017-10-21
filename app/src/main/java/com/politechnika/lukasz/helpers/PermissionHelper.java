@@ -6,10 +6,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-/**
- * Created by Lukasz on 12.10.2017.
- */
-
 public class PermissionHelper implements IPermissionHelper{
 
     @Override
