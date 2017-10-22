@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.astroweather;
+package com.politechnika.lukasz.views.activities;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,8 +11,9 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.politechnika.lukasz.astroweather.fragments.MoonFragment;
-import com.politechnika.lukasz.astroweather.fragments.SunFragment;
+import com.politechnika.lukasz.views.R;
+import com.politechnika.lukasz.views.fragments.MoonFragment;
+import com.politechnika.lukasz.views.fragments.SunFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
 

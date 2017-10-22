@@ -17,14 +17,14 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:name="com.politechnika.lukasz.astroweather.fragments.SunFragment"
+                android:name="com.politechnika.lukasz.views.fragments.SunFragment"
                 tools:layout="@layout/fragment_sun" />
             <fragment
                 android:id="@+id/secondFragment"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:name="com.politechnika.lukasz.astroweather.fragments.MoonFragment"
+                android:name="com.politechnika.lukasz.views.fragments.MoonFragment"
                 tools:layout="@layout/fragment_moon" />
     </LinearLayout>
     <android.support.v7.widget.Toolbar

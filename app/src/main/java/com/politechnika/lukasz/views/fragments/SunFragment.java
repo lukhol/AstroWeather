@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.astroweather.fragments;
+package com.politechnika.lukasz.views.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,15 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.astrocalculator.AstroCalculator;
-import com.astrocalculator.AstroDateTime;
-import com.politechnika.lukasz.astroweather.R;
+import com.politechnika.lukasz.views.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
-import com.politechnika.lukasz.providers.AstroCalculatorProvider;
 import com.politechnika.lukasz.providers.IAstroCalculatorProvider;
-
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.inject.Inject;
 

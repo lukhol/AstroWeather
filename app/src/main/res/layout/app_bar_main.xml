@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/raining_1"
     android:orientation="vertical"
-    tools:context="com.politechnika.lukasz.astroweather.MainActivity">
+    tools:context="com.politechnika.lukasz.views.activities.MainActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

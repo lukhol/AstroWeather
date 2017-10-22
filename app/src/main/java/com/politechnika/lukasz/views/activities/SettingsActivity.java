@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.astroweather;
+package com.politechnika.lukasz.views.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.politechnika.lukasz.views.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
 import com.politechnika.lukasz.validators.IStringInputValidator;

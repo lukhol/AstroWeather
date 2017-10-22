@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.astroweather;
+package com.politechnika.lukasz.views;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

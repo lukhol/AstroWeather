@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.astroweather;
+package com.politechnika.lukasz.views;
 
 import org.junit.Test;
 

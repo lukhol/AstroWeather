@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.astroweather;
+package com.politechnika.lukasz.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
-import com.politechnika.lukasz.astroweather.fragments.MainInfoFragment;
+
+import com.politechnika.lukasz.views.R;
+import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.IPermissionHelper;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;

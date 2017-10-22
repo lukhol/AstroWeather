@@ -1,12 +1,11 @@
 package com.politechnika.lukasz.dagger;
 
-import com.astrocalculator.AstroCalculator;
-import com.politechnika.lukasz.astroweather.AstroInfoActivity;
-import com.politechnika.lukasz.astroweather.MainActivity;
-import com.politechnika.lukasz.astroweather.SettingsActivity;
-import com.politechnika.lukasz.astroweather.fragments.MainInfoFragment;
-import com.politechnika.lukasz.astroweather.fragments.MoonFragment;
-import com.politechnika.lukasz.astroweather.fragments.SunFragment;
+import com.politechnika.lukasz.views.activities.AstroInfoActivity;
+import com.politechnika.lukasz.views.activities.MainActivity;
+import com.politechnika.lukasz.views.activities.SettingsActivity;
+import com.politechnika.lukasz.views.fragments.MainInfoFragment;
+import com.politechnika.lukasz.views.fragments.MoonFragment;
+import com.politechnika.lukasz.views.fragments.SunFragment;
 import com.politechnika.lukasz.providers.AstroCalculatorProvider;
 
 import javax.inject.Singleton;
