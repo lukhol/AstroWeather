@@ -1,8 +1,10 @@
 package com.politechnika.lukasz.views.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.views.R;
 import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity
 
     @Inject
     ISharedPreferenceHelper sharedPreferenceHelper;
+
+    @Inject
+    IWeatherService weatherService;
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -68,6 +74,8 @@ public class MainActivity extends AppCompatActivity
 
         if(permissionHelper != null)
             permissionHelper.checkPermission(this);
+
+        new TestAsyncTask().execute("lodz");
     }
 
     private void setFragment(int layoutId, Fragment fragment){
@@ -118,5 +126,18 @@ public class MainActivity extends AppCompatActivity
     public void onSunAndMoonButtonClicked(View view){
         Intent astroInfoActivity = new Intent(this, AstroInfoActivity.class);
         startActivity(astroInfoActivity);
+    }
+
+    class TestAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return weatherService.getWoeidForCity(strings[0]);
+        }
+
+        protected void onPostExecute(String woeid){
+            if(woeid != null)
+                Log.d("myTag", woeid);
+        }
     }
 }

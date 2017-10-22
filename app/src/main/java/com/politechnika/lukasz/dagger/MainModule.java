@@ -10,6 +10,8 @@ import com.politechnika.lukasz.helpers.PermissionHelper;
 import com.politechnika.lukasz.helpers.SharedPreferenceHelper;
 import com.politechnika.lukasz.providers.AstroCalculatorProvider;
 import com.politechnika.lukasz.providers.IAstroCalculatorProvider;
+import com.politechnika.lukasz.services.IWeatherService;
+import com.politechnika.lukasz.services.WeatherService;
 import com.politechnika.lukasz.validators.IStringInputValidator;
 import com.politechnika.lukasz.validators.StringInputValidator;
 
@@ -47,6 +49,11 @@ public class MainModule {
         SharedPreferenceHelper sph = new SharedPreferenceHelper();
         sph.setSharedPreferences(PreferenceManager.getDefaultSharedPreferences(daggerApp.getApplicationContext()));
         return sph;
+    }
+
+    @Provides
+    protected IWeatherService provideWeatherService(){
+        return new WeatherService();
     }
 
 }
