@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/raining_1">
+    android:background="@drawable/cloudy_1">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
