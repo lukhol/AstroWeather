@@ -67,7 +67,7 @@ public class EditFavLocationsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme);
-                builder.setTitle("Title");
+                builder.setTitle("Provide city:");
                 LayoutInflater li = LayoutInflater.from(getContext());
                 View viewInflated = li.inflate(R.layout.dialog_new_location, null);
                 final EditText input = viewInflated.findViewById(R.id.input);
