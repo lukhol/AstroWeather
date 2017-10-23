@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<!--
-    <group
-        android:checkableBehavior="single"
-        android:id="@+id/navigationDrawerMenuTop">
-        <item
-            android:id="@+id/mainFirstMenuItem"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="First" />
-        <item
-            android:id="@+id/mainSecondMenuItem"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Second" />
-        <item
-            android:id="@+id/mainThirdMenuItem"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Third" />
-
-    </group>
-
-    <item android:title="Settings"/>
-    -->
+    <item
+        android:id="@+id/editFavouriteLocationsMenuItem"
+        android:icon="@drawable/ic_place_localizer_more"
+        android:title="Edit locations"
+        android:orderInCategory="0"/>
 
     <group
         android:checkableBehavior="none"
@@ -28,11 +12,13 @@
         <item
             android:id="@+id/settingsMenuItem"
             android:icon="@drawable/ic_settings"
-            android:title="@string/action_settings" />
+            android:title="@string/action_settings"
+            android:orderInCategory="1000"/>
 
         <item
             android:id="@+id/viewPagerMenuItem"
             android:icon="@drawable/ic_astro"
-            android:title="Astro Informations"/>
+            android:title="Astro Informations"
+            android:orderInCategory="1001"/>
     </group>
 </menu>

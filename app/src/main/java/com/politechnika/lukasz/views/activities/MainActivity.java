@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +26,9 @@ import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.IPermissionHelper;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -78,7 +82,27 @@ public class MainActivity extends AppCompatActivity
         if(permissionHelper != null)
             permissionHelper.checkPermission(this);
 
-        new TestAsyncTask().execute("lodz");
+        //new TestAsyncTask().execute("lodz");
+        createCityMenuItems();
+    }
+
+    private void createCityMenuItems(){
+        Menu menu = navigationView.getMenu();
+
+        List<String> listOfLocations = new ArrayList();
+
+        listOfLocations.add("Lódź");
+        listOfLocations.add("Warszawa");
+        listOfLocations.add("Kraków");
+        listOfLocations.add("Rzgów");
+
+        int id = 0;
+
+        for(String str : listOfLocations){
+            menu.add(0, id + 1, id + 1, str)
+                    .setIcon(R.drawable.ic_place_localizer);
+            id++;
+        }
     }
 
     private void setFragment(int layoutId, Fragment fragment){
@@ -97,13 +121,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_toolbar_menu, menu);
         return true;
     }
-    */
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
