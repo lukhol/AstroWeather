@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.politechnika.lukasz.models.core.Weather;
+import com.politechnika.lukasz.models.dto.YahooWeather;
 import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.views.R;
 import com.politechnika.lukasz.views.fragments.MainInfoFragment;
@@ -128,16 +131,25 @@ public class MainActivity extends AppCompatActivity
         startActivity(astroInfoActivity);
     }
 
-    class TestAsyncTask extends AsyncTask<String, Void, String> {
+    class TestAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
 
         @Override
-        protected String doInBackground(String... strings) {
-            return weatherService.getWoeidForCity(strings[0]);
+        protected Pair<Weather, String> doInBackground(String... strings) {
+            Weather weather = null;
+            try{
+                weather = weatherService.getWeather(strings[0]);
+            } catch (Exception e){
+                return new Pair(weather, e.getMessage());
+            }
+            return new Pair(weather, null);
         }
 
-        protected void onPostExecute(String woeid){
-            if(woeid != null)
-                Log.d("myTag", woeid);
+        protected void onPostExecute(Pair<Weather, String> weatherPair){
+            if(weatherPair != null){
+                Weather weather = weatherPair.first;
+                String message = weatherPair.second;
+
+            }
         }
     }
 }

@@ -33,4 +33,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.google.code.gson:gson:2.8.2'
+    compile group: 'de.mindpipe.android', name: 'android-logging-log4j', version: '1.0.3'
 }

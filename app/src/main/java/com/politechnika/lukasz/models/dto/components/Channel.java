@@ -1,5 +1,7 @@
 package com.politechnika.lukasz.models.dto.components;
 
+import com.astrocalculator.AstroCalculator;
+
 /**
  * Created by Lukasz on 22.10.2017.
  */
@@ -12,6 +14,43 @@ public class Channel {
     private String language;
     private String lastBuildDate;
     private String ttl;
+    private Atmosphere atmosphere;
+    private Wind wind;
+    private Astronomy astronomy;
+    private Image image;
+    private Item item;
+
+    public Atmosphere getAtmosphere() {
+        return atmosphere;
+    }
+
+    public void setAtmosphere(Atmosphere atmosphere) {
+        this.atmosphere = atmosphere;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public void setWind(Wind wind) {
+        this.wind = wind;
+    }
+
+    public Astronomy getAstronomy() {
+        return astronomy;
+    }
+
+    public void setAstronomy(Astronomy astronomy) {
+        this.astronomy = astronomy;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
     public Units getUnits() {
         return units;
@@ -76,8 +115,6 @@ public class Channel {
     public void setItem(Item item) {
         this.item = item;
     }
-
-    private Item item;
 
 
 }

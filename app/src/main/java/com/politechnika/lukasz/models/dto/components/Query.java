@@ -4,16 +4,15 @@ public class Query {
     private int count;
     private String created;
     private String lang;
+    private Results results;
 
-    public Result getResult() {
-        return result;
+    public Results getResult() {
+        return results;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setResult(Results results) {
+        this.results = results;
     }
-
-    private Result result;
 
     public int getCount() {
         return count;

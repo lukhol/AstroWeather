@@ -14,6 +14,7 @@ import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.services.WeatherService;
 import com.politechnika.lukasz.validators.IStringInputValidator;
 import com.politechnika.lukasz.validators.StringInputValidator;
+import com.politechnika.lukasz.web.DtoConverter;
 
 import javax.inject.Singleton;
 import dagger.Module;
@@ -55,5 +56,8 @@ public class MainModule {
     protected IWeatherService provideWeatherService(){
         return new WeatherService();
     }
+
+    @Provides
+    protected DtoConverter provideDtoConverter() { return new DtoConverter(); }
 
 }

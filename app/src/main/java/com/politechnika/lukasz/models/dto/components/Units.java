@@ -8,6 +8,7 @@ public class Units {
     private String distance;
     private String pressure;
     private String speed;
+    private String temperature;
 
     public String getDistance() {
         return distance;
@@ -34,14 +35,10 @@ public class Units {
     }
 
     public String getTemperature() {
-        return Temperature;
+        return temperature;
     }
 
     public void setTemperature(String temperature) {
-        Temperature = temperature;
+        this.temperature = temperature;
     }
-
-    private String Temperature;
-
-
 }
