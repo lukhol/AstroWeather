@@ -5,8 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.politechnika.lukasz.views.R;
+import com.politechnika.lukasz.R;
 
 public class BlankFragment extends Fragment {
 

@@ -1,14 +1,12 @@
 package com.politechnika.lukasz.views.fragments;
-
+import com.politechnika.lukasz.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.astrocalculator.AstroCalculator;
-import com.politechnika.lukasz.views.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.providers.IAstroCalculatorProvider;
 

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.politechnika.lukasz.views.R;
+import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
 

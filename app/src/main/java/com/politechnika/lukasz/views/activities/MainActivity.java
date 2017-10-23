@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,14 +18,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.politechnika.lukasz.models.core.Weather;
-import com.politechnika.lukasz.models.dto.YahooWeather;
 import com.politechnika.lukasz.services.IWeatherService;
-import com.politechnika.lukasz.views.R;
+import com.politechnika.lukasz.views.MyListViewAdapter;
 import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.IPermissionHelper;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
-
+import com.politechnika.lukasz.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +80,6 @@ public class MainActivity extends AppCompatActivity
         if(permissionHelper != null)
             permissionHelper.checkPermission(this);
 
-        //new TestAsyncTask().execute("lodz");
         createCityMenuItems();
     }
 
@@ -139,6 +136,10 @@ public class MainActivity extends AppCompatActivity
         else if(id == R.id.viewPagerMenuItem){
             Intent viewPageIntent = new Intent(getApplicationContext(), AstroInfoActivity.class);
             startActivity(viewPageIntent);
+        }
+        else if(id == R.id.editFavouriteLocationsMenuItem){
+            Intent editFavLocationsIntent = new Intent(getApplicationContext(), EditFavLocationsActivity.class);
+            startActivity(editFavLocationsIntent);
         }
 
         item.setChecked(false);

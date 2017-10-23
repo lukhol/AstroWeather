@@ -9,8 +9,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.politechnika.lukasz.views.R;
+import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
 import com.politechnika.lukasz.validators.IStringInputValidator;
