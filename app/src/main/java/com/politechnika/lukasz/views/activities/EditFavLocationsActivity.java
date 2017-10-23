@@ -17,11 +17,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.politechnika.lukasz.views.MyListViewAdapter;
 import java.util.ArrayList;
 
-public class EditFavLocationsActivity extends AppCompatActivity {
+public class EditFavLocationsActivity extends BaseActivity {
 
     ArrayList<String> listOfLocations = new ArrayList();
 
@@ -32,15 +31,8 @@ public class EditFavLocationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_edit_fav_locations);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        makeToolbarAndActionBar();
 
         locationsListView = (ListView)findViewById(R.id.locationsListView);
         addNewLocationButton = (Button)findViewById(R.id.addNewLocationButton);
@@ -91,10 +83,6 @@ public class EditFavLocationsActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-    }
-
-    private AppCompatActivity getContext(){
-        return this;
     }
 
     @Override

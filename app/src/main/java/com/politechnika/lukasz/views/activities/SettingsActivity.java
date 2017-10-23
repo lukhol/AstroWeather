@@ -16,7 +16,7 @@ import com.politechnika.lukasz.validators.IStringInputValidator;
 
 import javax.inject.Inject;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     @Inject
     IStringInputValidator stringInputValidator;
@@ -32,11 +32,8 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DaggerApplication.component().inject(this);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        makeToolbarAndActionBar();
 
         longitudeEditText = (EditText)findViewById(R.id.longitudeEditText);
         latitudeEditText = (EditText)findViewById(R.id.latitudeEditText);
@@ -45,10 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
         latitudeEditText.setText(sharedPreferenceHelper.getString("latitude", ""));
         longitudeEditText.setText(sharedPreferenceHelper.getString("longitude", ""));
         refreshTimeEditText.setText(sharedPreferenceHelper.getString("refreshTime", "15"));
-
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
 
         addTextChangedListenerToLongitude();
         addTextChangedListenerToLatitude();
@@ -101,7 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
                         longitudeEditText.setText(afterChanged);
                         longitudeEditText.setSelection(afterChanged.length());
                     }
-                    Toast.makeText(getApplicationContext(), "Wrong input", Toast.LENGTH_SHORT).show();
+                    showToast("Wrong input");
                 }
             }
 
@@ -128,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
                         latitudeEditText.setText(afterChanged);
                         latitudeEditText.setSelection(afterChanged.length());
                     }
-                    Toast.makeText(getApplicationContext(), "Wrong input", Toast.LENGTH_SHORT).show();
+                    showToast("Wrong input");
                 }
             }
 

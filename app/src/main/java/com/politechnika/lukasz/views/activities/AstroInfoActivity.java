@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
-public class AstroInfoActivity extends AppCompatActivity {
+public class AstroInfoActivity extends BaseActivity {
 
     @Inject
     ISharedPreferenceHelper sharedPreferenceHelper;
@@ -39,10 +39,9 @@ public class AstroInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         DaggerApplication.component().inject(this);
         setContentView(R.layout.activity_astro_info);
+        makeToolbarAndActionBar();
 
         mPager = (ViewPager) findViewById(R.id.pager);
         if(mPager != null) {
@@ -52,13 +51,6 @@ public class AstroInfoActivity extends AppCompatActivity {
             sunFragment = (SunFragment)getSupportFragmentManager().findFragmentById(R.id.firstFragment);
             moonFragment = (MoonFragment)getSupportFragmentManager().findFragmentById(R.id.secondFragment);
         }
-
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
 
         setupTimer();
     }
