@@ -11,6 +11,7 @@
         <!-- Hamburger color: -->
         <item name="colorControlNormal">@color/textColor</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -23,5 +24,28 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Dialog style: -->
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:background">#232323</item>
+        <item name="android:titleTextStyle">@style/TitleTextStyle</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="TitleTextStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <!-- -->
 
 </resources>
