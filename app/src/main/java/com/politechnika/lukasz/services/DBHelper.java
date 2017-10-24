@@ -9,9 +9,12 @@ import com.google.gson.Gson;
 import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Weather;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "AstroWeatherDatabase.db";
@@ -64,11 +67,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
             String jsonString = new Gson().toJson(place.getWeather());
 
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-            String timeStamp = format.format(calendar.getTime());
+            Calendar calendar = Calendar.getInstance(Locale.getDefault());
+            Date now = calendar.getTime();
+            Timestamp currentTimestamp = new Timestamp(now.getTime());
 
-            return insertFavourite(place, jsonString, timeStamp);
+            return insertFavourite(place, jsonString, currentTimestamp.toString());
 
         } catch (Exception e) {
             return -1;
@@ -127,11 +130,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean updateFavourite(Place place){
         String jsonString = new Gson().toJson(place.getWeather());
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String timeStamp = format.format(calendar.getTime());
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        Date now = calendar.getTime();
+        Timestamp currentTimestamp = new Timestamp(now.getTime());
 
-        return updateFavourite(place, jsonString, timeStamp);
+        return updateFavourite(place, jsonString, currentTimestamp.toString());
     }
 
     private boolean updateFavourite(Place place, String weatherJson, String timeStamp){
