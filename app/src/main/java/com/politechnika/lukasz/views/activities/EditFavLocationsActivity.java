@@ -3,6 +3,8 @@ package com.politechnika.lukasz.views.activities;
 import com.politechnika.lukasz.R;
 
 import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +14,23 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.politechnika.lukasz.dagger.DaggerApplication;
+import com.politechnika.lukasz.models.core.Place;
+import com.politechnika.lukasz.models.core.Weather;
+import com.politechnika.lukasz.services.DBHelper;
+import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.views.MyListViewAdapter;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class EditFavLocationsActivity extends BaseActivity {
 
-    ArrayList<String> listOfLocations = new ArrayList();
+    @Inject
+    IWeatherService weatherService;
+
+    ArrayList<Place> listOfLocations = new ArrayList();
 
     private ListView locationsListView;
     private MyListViewAdapter myListViewAdapter;
@@ -26,16 +39,18 @@ public class EditFavLocationsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DaggerApplication.component().inject(this);
         setContentView(R.layout.activity_edit_fav_locations);
         makeToolbarAndActionBar();
+
+        //Move to method
+        DBHelper dbHelper = new DBHelper(this);
+        listOfLocations = dbHelper.getFavourites();
+        dbHelper.close();
 
         locationsListView = (ListView)findViewById(R.id.locationsListView);
         addNewLocationButton = (Button)findViewById(R.id.addNewLocationButton);
 
-        listOfLocations.add("Lódź");
-        listOfLocations.add("Warszawa");
-        listOfLocations.add("Kraków");
-        listOfLocations.add("Rzgów");
 
         myListViewAdapter = new MyListViewAdapter(getApplicationContext(), listOfLocations);
         locationsListView.setAdapter(myListViewAdapter);
@@ -43,10 +58,10 @@ public class EditFavLocationsActivity extends BaseActivity {
         locationsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String locationItem = (String)adapterView.getItemAtPosition(i);
-                listOfLocations.remove(locationItem);
-                myListViewAdapter.remove(i);
-                myListViewAdapter.notifyDataSetChanged();
+                Place locationItem = (Place)adapterView.getItemAtPosition(i);
+                //listOfLocations.remove(locationItem);
+                //myListViewAdapter.remove(i);
+                //myListViewAdapter.notifyDataSetChanged();
             }
         });
 
@@ -65,7 +80,7 @@ public class EditFavLocationsActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        listOfLocations.add(input.getText().toString());
+                        new GetWeatherAsyncTask().execute(input.getText().toString());
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -89,5 +104,45 @@ public class EditFavLocationsActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class GetWeatherAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
+
+        @Override
+        protected Pair<Weather, String> doInBackground(String... strings) {
+            Weather weather = null;
+            try{
+                weather = weatherService.getWeather(strings[0]);
+            } catch (Exception e){
+                return new Pair<>(weather, e.getMessage());
+            }
+            return new Pair<>(weather, null);
+        }
+
+        protected void onPostExecute(Pair<Weather, String> weatherPair){
+            if(weatherPair != null){
+                Weather weather = weatherPair.first;
+                String message = weatherPair.second;
+
+                if(message != null) {
+                    showInformationDialog("Something went wrong.", message);
+                    return;
+                }
+
+                Place place = new Place();
+                place.setLongitude(Double.parseDouble(weather.getItem().getLongitude()));
+                place.setLatitude(Double.parseDouble(weather.getItem().getLatitude()));
+                place.setCity(weather.getLocation().getCity());
+                place.setWeather(weather);
+
+                DBHelper dbHelper = new DBHelper(getActivity());
+                int result = dbHelper.insertFavourite(place);
+                showInformationDialog("", "" + result);
+
+                listOfLocations = dbHelper.getFavourites();
+
+                dbHelper.close();
+            }
+        }
     }
 }

@@ -5,15 +5,13 @@ import java.util.List;
 
 public class Item {
     private String title;
-    private String lat;
+    @SerializedName("lat")
+    private String latitude;
     @SerializedName("long")
     private String longitude;
-    private String link;
     private String pubDate;
     private Condition condition;
     private List<ForecastItem> forecast;
-    private String description;
-    private Guid guid;
 
     public String getTitle() {
         return title;
@@ -23,12 +21,12 @@ public class Item {
         this.title = title;
     }
 
-    public String getLat() {
-        return lat;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setLat(String lat) {
-        this.lat = lat;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
     public String getLongitude() {
@@ -37,14 +35,6 @@ public class Item {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getPubDate() {
@@ -69,21 +59,5 @@ public class Item {
 
     public void setForecast(List<ForecastItem> forecast) {
         this.forecast = forecast;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Guid getGuid() {
-        return guid;
-    }
-
-    public void setGuid(Guid guid) {
-        this.guid = guid;
     }
 }

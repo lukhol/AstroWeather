@@ -19,6 +19,15 @@ public class Channel {
     private Astronomy astronomy;
     private Image image;
     private Item item;
+    private Location location;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public Atmosphere getAtmosphere() {
         return atmosphere;

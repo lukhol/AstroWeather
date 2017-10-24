@@ -4,6 +4,7 @@ import com.politechnika.lukasz.models.dto.components.Astronomy;
 import com.politechnika.lukasz.models.dto.components.Atmosphere;
 import com.politechnika.lukasz.models.dto.components.Image;
 import com.politechnika.lukasz.models.dto.components.Item;
+import com.politechnika.lukasz.models.dto.components.Location;
 import com.politechnika.lukasz.models.dto.components.Units;
 import com.politechnika.lukasz.models.dto.components.Wind;
 
@@ -18,7 +19,15 @@ public class Weather {
     private Astronomy astronomy;
     private Image image;
     private Item item;
-    private String lastBuldDate;
+    private Location location;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public Units getUnits() {
         return units;
@@ -66,13 +75,5 @@ public class Weather {
 
     public void setItem(Item item) {
         this.item = item;
-    }
-
-    public String getLastBuldDate() {
-        return lastBuldDate;
-    }
-
-    public void setLastBuldDate(String lastBuldDate) {
-        this.lastBuldDate = lastBuldDate;
     }
 }

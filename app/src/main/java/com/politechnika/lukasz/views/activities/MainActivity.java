@@ -18,7 +18,9 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Weather;
+import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
@@ -81,23 +83,21 @@ public class MainActivity extends BaseActivity
             permissionHelper.checkPermission(this);
 
         createCityMenuItems();
-        new GetWeatherAsyncTask().execute("lodz");
     }
 
     private void createCityMenuItems(){
         Menu menu = navigationView.getMenu();
 
-        List<String> listOfLocations = new ArrayList();
+        ArrayList<Place> listOfLocations = new ArrayList();
 
-        listOfLocations.add("Lódź");
-        listOfLocations.add("Warszawa");
-        listOfLocations.add("Kraków");
-        listOfLocations.add("Rzgów");
+        DBHelper dbHelper = new DBHelper(this);
+        listOfLocations = dbHelper.getFavourites();
+        dbHelper.close();
 
         int id = 0;
 
-        for(String str : listOfLocations){
-            menu.add(0, id + 1, id + 1, str)
+        for(Place tempPlace : listOfLocations){
+            menu.add(0, id + 1, id + 1, tempPlace.getCity())
                     .setIcon(R.drawable.ic_place_localizer);
             id++;
         }
@@ -153,33 +153,5 @@ public class MainActivity extends BaseActivity
     public void onSunAndMoonButtonClicked(View view){
         Intent astroInfoActivity = new Intent(this, AstroInfoActivity.class);
         startActivity(astroInfoActivity);
-    }
-
-    class GetWeatherAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
-
-        @Override
-        protected Pair<Weather, String> doInBackground(String... strings) {
-            Weather weather = null;
-            try{
-                weather = weatherService.getWeather(strings[0]);
-            } catch (Exception e){
-                return new Pair<>(weather, e.getMessage());
-            }
-            return new Pair<>(weather, null);
-        }
-
-        protected void onPostExecute(Pair<Weather, String> weatherPair){
-            if(weatherPair != null){
-                Weather weather = weatherPair.first;
-                String message = weatherPair.second;
-
-                if(message != null) {
-                    showInformationDialog("Something went wrong.", message);
-                    return;
-                }
-
-                showInformationDialog("Found for location", weather.getItem().getForecast().get(0).getDay());
-            }
-        }
     }
 }

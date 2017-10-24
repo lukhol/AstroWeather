@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.politechnika.lukasz.R;
+import com.politechnika.lukasz.models.core.Place;
+
 import java.util.ArrayList;
 
 public class MyListViewAdapter extends ArrayAdapter {
 
-    public MyListViewAdapter(Context context, ArrayList<String> items) {
+    public MyListViewAdapter(Context context, ArrayList<Place> items) {
         super(context, R.layout.location_listview_row, items);
     }
 
@@ -20,11 +22,11 @@ public class MyListViewAdapter extends ArrayAdapter {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View customView = layoutInflater.inflate(R.layout.location_listview_row, parent, false);
 
-        String item = (String)getItem(position);
+        Place placeItem = (Place)getItem(position);
 
         TextView textView = customView.findViewById(R.id.locationTextViewOnList);
 
-        textView.setText(item);
+        textView.setText(placeItem.getCity());
 
         return customView;
     }
