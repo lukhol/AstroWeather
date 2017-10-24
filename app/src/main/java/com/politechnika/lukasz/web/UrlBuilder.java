@@ -7,7 +7,7 @@ public class UrlBuilder {
 
     private static final String YAHOO_WOEID_QUERY = "select * from geo.places(1) where text='%s'";
     private static final String YAHOO_WEATHER_QUERY = "select * from weather.forecast where woeid = '%s' and u='c'";
-    private static final String YAHOO_WEATHER_ON_CITY_QUERY = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='%s')";
+    private static final String YAHOO_WEATHER_ON_CITY_QUERY = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='%s') and u='c'";
 
     public static String getWoeidForCityURL(String cityCode, ResponseType responseType){
         String URL =  YAHOO_URL_BASE + Uri.encode(String.format(YAHOO_WOEID_QUERY, cityCode));

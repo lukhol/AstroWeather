@@ -21,6 +21,9 @@ public class WeatherService implements IWeatherService {
     @Inject
     DtoConverter dtoConverter;
 
+    @Inject
+    Gson gson;
+
     public WeatherService(){
         DaggerApplication.component().inject(this);
     }
@@ -64,12 +67,10 @@ public class WeatherService implements IWeatherService {
             int responseCode = connection.getResponseCode();
 
             if(responseCode != 200)
-                return null;
+                throw new WeatherInfoException("Server not responding");
 
             InputStream inputStream = connection.getInputStream();
-
             String resultString = streamToString(inputStream);
-            Gson gson = new Gson();
             YahooWeather yahooWeather = gson.fromJson(resultString, YahooWeather.class);
 
             if(yahooWeather.getQuery().getCount() == 0)
@@ -78,7 +79,6 @@ public class WeatherService implements IWeatherService {
             return dtoConverter.dtoYahooWeatherToWeather(yahooWeather);
 
         } catch (Exception e){
-
             if(e instanceof WeatherInfoException)
                 throw new WeatherInfoException(e.getMessage());
 

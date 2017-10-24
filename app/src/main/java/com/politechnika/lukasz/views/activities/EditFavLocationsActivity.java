@@ -3,16 +3,11 @@ package com.politechnika.lukasz.views.activities;
 import com.politechnika.lukasz.R;
 
 import android.content.DialogInterface;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,9 +53,9 @@ public class EditFavLocationsActivity extends BaseActivity {
         addNewLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
                 builder.setTitle("Provide city:");
-                LayoutInflater li = LayoutInflater.from(getContext());
+                LayoutInflater li = LayoutInflater.from(getActivity());
                 View viewInflated = li.inflate(R.layout.dialog_new_location, null);
                 final EditText input = viewInflated.findViewById(R.id.input);
                 builder.setView(viewInflated);

@@ -1,5 +1,6 @@
 package com.politechnika.lukasz.views.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.politechnika.lukasz.models.core.Weather;
@@ -79,6 +81,7 @@ public class MainActivity extends BaseActivity
             permissionHelper.checkPermission(this);
 
         createCityMenuItems();
+        new GetWeatherAsyncTask().execute("lodz");
     }
 
     private void createCityMenuItems(){
@@ -152,7 +155,7 @@ public class MainActivity extends BaseActivity
         startActivity(astroInfoActivity);
     }
 
-    class TestAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
+    class GetWeatherAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
 
         @Override
         protected Pair<Weather, String> doInBackground(String... strings) {
@@ -160,9 +163,9 @@ public class MainActivity extends BaseActivity
             try{
                 weather = weatherService.getWeather(strings[0]);
             } catch (Exception e){
-                return new Pair(weather, e.getMessage());
+                return new Pair<>(weather, e.getMessage());
             }
-            return new Pair(weather, null);
+            return new Pair<>(weather, null);
         }
 
         protected void onPostExecute(Pair<Weather, String> weatherPair){
@@ -170,6 +173,12 @@ public class MainActivity extends BaseActivity
                 Weather weather = weatherPair.first;
                 String message = weatherPair.second;
 
+                if(message != null) {
+                    showInformationDialog("Something went wrong.", message);
+                    return;
+                }
+
+                showInformationDialog("Found for location", weather.getItem().getForecast().get(0).getDay());
             }
         }
     }

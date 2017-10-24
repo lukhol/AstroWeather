@@ -1,9 +1,9 @@
 package com.politechnika.lukasz.dagger;
 
 import android.app.Application;
-import android.content.Context;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
 import com.politechnika.lukasz.helpers.IPermissionHelper;
 import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
 import com.politechnika.lukasz.helpers.PermissionHelper;
@@ -60,4 +60,6 @@ public class MainModule {
     @Provides
     protected DtoConverter provideDtoConverter() { return new DtoConverter(); }
 
+    @Provides
+    protected Gson provideGson() { return new Gson(); }
 }
