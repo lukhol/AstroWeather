@@ -77,6 +77,12 @@ public class EditFavLocationsActivity extends BaseActivity {
         addNewLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                BaseActivity thisAsBaseActivity = (BaseActivity)getActivity();
+                if(!thisAsBaseActivity.isOnline()){
+                    showToast("No internet connecton. Plese turn on wifi or mobile data.");
+                    return;
+                }
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
                 builder.setTitle("Provide city:");
                 LayoutInflater li = LayoutInflater.from(getActivity());
