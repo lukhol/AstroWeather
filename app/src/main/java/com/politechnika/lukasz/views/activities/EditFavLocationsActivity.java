@@ -22,6 +22,7 @@ import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.views.MyListViewAdapter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,7 +31,7 @@ public class EditFavLocationsActivity extends BaseActivity {
     @Inject
     IWeatherService weatherService;
 
-    ArrayList<Place> listOfLocations = new ArrayList();
+    ArrayList<Place> listOfLocations;
 
     private ListView locationsListView;
     private MyListViewAdapter myListViewAdapter;
@@ -44,7 +45,7 @@ public class EditFavLocationsActivity extends BaseActivity {
         makeToolbarAndActionBar();
 
         //Move to method
-        DBHelper dbHelper = new DBHelper(this);
+        final DBHelper dbHelper = new DBHelper(this);
         listOfLocations = dbHelper.getFavourites();
         dbHelper.close();
 
@@ -59,9 +60,17 @@ public class EditFavLocationsActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Place locationItem = (Place)adapterView.getItemAtPosition(i);
-                //listOfLocations.remove(locationItem);
-                //myListViewAdapter.remove(i);
-                //myListViewAdapter.notifyDataSetChanged();
+
+                DBHelper dbHelper1 = new DBHelper(getActivity());
+                dbHelper.removeFavourite(locationItem.getCity());
+                List<Place> newPlacsList = dbHelper.getFavourites();
+
+                listOfLocations.clear();
+                for(Place tempPlace : newPlacsList){
+                    listOfLocations.add(tempPlace);
+                }
+
+                myListViewAdapter.notifyDataSetChanged();
             }
         });
 
@@ -137,9 +146,16 @@ public class EditFavLocationsActivity extends BaseActivity {
 
                 DBHelper dbHelper = new DBHelper(getActivity());
                 int result = dbHelper.insertFavourite(place);
-                showInformationDialog("", "" + result);
+                showToast("" + result);
 
-                listOfLocations = dbHelper.getFavourites();
+                List<Place> newPlacsList = dbHelper.getFavourites();
+
+                listOfLocations.clear();
+                for(Place tempPlace : newPlacsList){
+                    listOfLocations.add(tempPlace);
+                }
+
+                myListViewAdapter.notifyDataSetChanged();
 
                 dbHelper.close();
             }

@@ -12,7 +12,6 @@ import com.politechnika.lukasz.models.core.Weather;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "AstroWeatherDatabase.db";
@@ -132,7 +131,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
             return (int)newRowId;
         } catch (Exception e) {
-            String str = e.getMessage();
             return -1;
         }
     }
