@@ -126,6 +126,18 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        int id = menuItem.getItemId();
+
+        if(id == R.id.actionAddCity){
+            Intent editFavLocationsActivity = new Intent(getApplicationContext(), EditFavLocationsActivity.class);
+            startActivity(editFavLocationsActivity);
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
