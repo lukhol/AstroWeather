@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "CREATE TABLE IF NOT EXISTS "+
                             TABLE_NAME +
                             "(" + COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                            COLUMN_CITY + " TEXT, " +
+                            COLUMN_CITY + " TEXT UNIQUE, " +
                             COLUMN_LATITUDE + " REAL, " +
                             COLUMN_LONGITUDE + " REAL, " +
                             COLUMN_WEATHER_JSON + " TEXT, " +
@@ -57,6 +57,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public int insertFavourite(Place place){
         try {
+            Place ifPlaceExist = getFavourite(place.getCity());
+
+            if(ifPlaceExist != null)
+                return -2;
+
             String jsonString = new Gson().toJson(place.getWeather());
 
             Calendar calendar = Calendar.getInstance();
@@ -101,7 +106,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Place getFavourite(String city){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + "WHERE " + COLUMN_CITY + " = " + city, null);
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_CITY + " = '" + city + "'";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.getCount() == 0)
+            return null;
+
         cursor.moveToNext();
 
         Place place = new Place();
@@ -116,7 +126,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private int insertFavourite(Place place, String weatherJson, String timeStamp){
-
         try{
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();

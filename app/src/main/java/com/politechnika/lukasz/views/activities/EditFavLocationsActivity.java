@@ -152,7 +152,11 @@ public class EditFavLocationsActivity extends BaseActivity {
 
                 DBHelper dbHelper = new DBHelper(getActivity());
                 int result = dbHelper.insertFavourite(place);
+
                 showToast("" + result);
+
+                if(result == -2)
+                    showToast("Cannot add the same city twice.");
 
                 List<Place> newPlacsList = dbHelper.getFavourites();
 
