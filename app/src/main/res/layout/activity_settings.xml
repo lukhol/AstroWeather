@@ -11,13 +11,29 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp">
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true">
         <LinearLayout
             android:orientation="vertical"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:text="AstroCalculator settings:"
+                android:layout_marginBottom="10dp"
+                android:textSize="20dp"
+                android:layout_margin="5dp"/>
+            <View
+                android:background="#989898"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="0dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,16 +91,85 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/refresh_time_minutes"/>
+
                 <EditText
                     android:id="@+id/refreshTimeEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:digits="0123456789."
-                    android:textColor="@android:color/black"
+                    android:layout_margin="10dp"
                     android:background="@drawable/edit_text_drawable"
+                    android:digits="0123456789."
                     android:padding="10dp"
-                    android:layout_margin="10dp"/>
+                    android:textColor="@android:color/black" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:text="Units settings:"
+                android:layout_marginBottom="10dp"
+                android:textSize="20dp"
+                android:layout_margin="5dp"/>
+            <View
+                android:background="#989898"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="0dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:text="Speed units:"
+                android:layout_marginLeft="5dp"/>
+            <RadioGroup
+                android:id="@+id/velocityRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/kmphRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:text="km/h" />
+                <RadioButton
+                    android:id="@+id/mphRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:text="mph"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:text="Temperature units:"
+                android:layout_marginLeft="5dp"/>
+            <RadioGroup
+                android:id="@+id/temperatureRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/celsiusRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:text="°C" />
+                <RadioButton
+                    android:id="@+id/fahrenheitRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:text="°F"/>
+            </RadioGroup>
         </LinearLayout>
     </ScrollView>
 

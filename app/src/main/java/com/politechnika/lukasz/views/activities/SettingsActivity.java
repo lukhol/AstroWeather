@@ -1,5 +1,6 @@
 package com.politechnika.lukasz.views.activities;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
@@ -28,6 +30,12 @@ public class SettingsActivity extends BaseActivity {
     private EditText latitudeEditText;
     private EditText refreshTimeEditText;
 
+    private RadioButton kmphRadioButton;
+    private RadioButton mphRadioButton;
+
+    private RadioButton celsiusRadioButton;
+    private RadioButton fahrenheitRadioButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +43,7 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
         makeToolbarAndActionBar();
 
-        longitudeEditText = (EditText)findViewById(R.id.longitudeEditText);
-        latitudeEditText = (EditText)findViewById(R.id.latitudeEditText);
-        refreshTimeEditText = (EditText)findViewById(R.id.refreshTimeEditText);
+        getViewsById();
 
         latitudeEditText.setText(sharedPreferenceHelper.getString("latitude", ""));
         longitudeEditText.setText(sharedPreferenceHelper.getString("longitude", ""));
@@ -45,6 +51,18 @@ public class SettingsActivity extends BaseActivity {
 
         addTextChangedListenerToLongitude();
         addTextChangedListenerToLatitude();
+    }
+
+    private void getViewsById(){
+        longitudeEditText = (EditText)findViewById(R.id.longitudeEditText);
+        latitudeEditText = (EditText)findViewById(R.id.latitudeEditText);
+        refreshTimeEditText = (EditText)findViewById(R.id.refreshTimeEditText);
+
+        kmphRadioButton = (RadioButton)findViewById(R.id.kmphRadioButton);
+        mphRadioButton = (RadioButton)findViewById(R.id.mphRadioButton);
+
+        celsiusRadioButton = (RadioButton)findViewById(R.id.celsiusRadioButton);
+        fahrenheitRadioButton = (RadioButton)findViewById(R.id.fahrenheitRadioButton);
     }
 
     @Override

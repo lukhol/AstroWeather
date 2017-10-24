@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.politechnika.lukasz.helpers.UnitsConverter;
 import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.services.DBHelper;

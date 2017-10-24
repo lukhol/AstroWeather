@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:name=".views.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".views.activities.MainActivity"
