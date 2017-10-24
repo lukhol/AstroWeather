@@ -125,6 +125,30 @@ public class DBHelper extends SQLiteOpenHelper {
         return place;
     }
 
+    public boolean updateFavourite(Place place){
+        String jsonString = new Gson().toJson(place.getWeather());
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String timeStamp = format.format(calendar.getTime());
+
+        return updateFavourite(place, jsonString, timeStamp);
+    }
+
+    private boolean updateFavourite(Place place, String weatherJson, String timeStamp){
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+
+            cv.put(COLUMN_WEATHER_JSON, weatherJson);
+            cv.put(COLUMN_LAST_UPDATE_TIME, timeStamp);
+
+            int result = db.update(TABLE_NAME, cv, COLUMN_CITY + " = '" + place.getCity() + "'", null);
+            return result > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private int insertFavourite(Place place, String weatherJson, String timeStamp){
         try{
             SQLiteDatabase db = this.getWritableDatabase();

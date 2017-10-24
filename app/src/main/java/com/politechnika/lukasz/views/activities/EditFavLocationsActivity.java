@@ -135,11 +135,11 @@ public class EditFavLocationsActivity extends BaseActivity {
         }
 
         protected void onPostExecute(Pair<Weather, String> weatherPair){
-            if(weatherPair != null){
+            if(weatherPair != null) {
                 Weather weather = weatherPair.first;
                 String message = weatherPair.second;
 
-                if(message != null) {
+                if (message != null) {
                     showInformationDialog("Something went wrong.", message);
                     return;
                 }
@@ -155,8 +155,10 @@ public class EditFavLocationsActivity extends BaseActivity {
 
                 showToast("" + result);
 
-                if(result == -2)
+                if (result == -2) {
                     showToast("Cannot add the same city twice.");
+                    dbHelper.updateFavourite(place);
+                }
 
                 List<Place> newPlacsList = dbHelper.getFavourites();
 
@@ -165,9 +167,9 @@ public class EditFavLocationsActivity extends BaseActivity {
                     listOfLocations.add(tempPlace);
                 }
 
-                myListViewAdapter.notifyDataSetChanged();
-
                 dbHelper.close();
+
+                myListViewAdapter.notifyDataSetChanged();
             }
         }
     }
