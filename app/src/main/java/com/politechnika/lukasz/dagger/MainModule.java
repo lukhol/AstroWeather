@@ -1,20 +1,23 @@
 package com.politechnika.lukasz.dagger;
 
 import android.app.Application;
+import android.content.Context;
 import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
-import com.politechnika.lukasz.helpers.IPermissionHelper;
-import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
-import com.politechnika.lukasz.helpers.PermissionHelper;
-import com.politechnika.lukasz.helpers.SharedPreferenceHelper;
+import com.politechnika.lukasz.services.IPermissionHelper;
+import com.politechnika.lukasz.services.ISharedPreferenceHelper;
+import com.politechnika.lukasz.services.PermissionHelper;
+import com.politechnika.lukasz.services.SharedPreferenceHelper;
+import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.providers.AstroCalculatorProvider;
 import com.politechnika.lukasz.providers.IAstroCalculatorProvider;
+import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.services.WeatherService;
 import com.politechnika.lukasz.validators.IStringInputValidator;
 import com.politechnika.lukasz.validators.StringInputValidator;
-import com.politechnika.lukasz.web.DtoConverter;
+import com.politechnika.lukasz.services.DtoConverter;
 
 import javax.inject.Singleton;
 import dagger.Module;
@@ -62,4 +65,11 @@ public class MainModule {
 
     @Provides
     protected Gson provideGson() { return new Gson(); }
+
+    @Provides
+    @Singleton
+    protected Settings provideSettings(){
+        ISharedPreferenceHelper sharedPreferenceHelper = provideSharedPreferenceHelper();
+        return sharedPreferenceHelper.getSettings();
+    }
 }

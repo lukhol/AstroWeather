@@ -1,11 +1,8 @@
 package com.politechnika.lukasz.views.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,18 +12,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.politechnika.lukasz.helpers.UnitsConverter;
 import com.politechnika.lukasz.models.core.Place;
-import com.politechnika.lukasz.models.core.Weather;
+import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.helpers.IPermissionHelper;
-import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
+import com.politechnika.lukasz.services.IPermissionHelper;
+import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +38,9 @@ public class MainActivity extends BaseActivity
 
     @Inject
     IWeatherService weatherService;
+
+    @Inject
+    Settings settings;
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -70,8 +68,11 @@ public class MainActivity extends BaseActivity
                 menuLatitudeTextView = (TextView)findViewById(R.id.menuLatitudeTextView);
                 menuLongitudeTextView = (TextView)findViewById(R.id.menuLongitudeTextView);
 
-                menuLatitudeTextView.setText("Latitude: " + sharedPreferenceHelper.getString("latitude", ""));
-                menuLongitudeTextView.setText("Longitude: " + sharedPreferenceHelper.getString("longitude", ""));
+                String latitudeText = "Latitude: " + String.valueOf(settings.getLatitude());
+                String longitudeText = "Longitude: " + String.valueOf(settings.getLongitude());
+
+                menuLatitudeTextView.setText(latitudeText);
+                menuLongitudeTextView.setText(longitudeText);
             }
         };
         drawer.setDrawerListener(toggle);
@@ -83,17 +84,13 @@ public class MainActivity extends BaseActivity
         if(permissionHelper != null)
             permissionHelper.checkPermission(this);
 
-        createCityMenuItems();
+        List<Place> listOfLocationsFromDatabase = getFavouritesFromDatabase();
+        createCityMenuItems(listOfLocationsFromDatabase);
+        resolveWeatherInformationOnStart(listOfLocationsFromDatabase);
     }
 
-    private void createCityMenuItems(){
+    private void createCityMenuItems(List<Place> listOfLocations){
         Menu menu = navigationView.getMenu();
-
-        ArrayList<Place> listOfLocations = new ArrayList();
-
-        DBHelper dbHelper = new DBHelper(this);
-        listOfLocations = dbHelper.getFavourites();
-        dbHelper.close();
 
         int id = 0;
 
@@ -154,6 +151,8 @@ public class MainActivity extends BaseActivity
         else if(id == R.id.editFavouriteLocationsMenuItem){
             Intent editFavLocationsIntent = new Intent(getApplicationContext(), EditFavLocationsActivity.class);
             startActivity(editFavLocationsIntent);
+        } else {
+            resolveWeatherInformationOnMenuItemClicked(item.getTitle().toString());
         }
 
         item.setChecked(false);
@@ -163,8 +162,55 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    private void resolveWeatherInformationOnMenuItemClicked(String city){
+        //1. Load information from database
+        //2. If information about location exist in db check if are valid
+        //3. If not exist or not valid download it from yahoo server.
+        //4. Display to the user
+        showToast(city);
+        settings.setActuallyDisplayingCity("dsadsadsadsadsadsa");
+        sharedPreferenceHelper.saveSettings(settings);
+    }
+
+    private void resolveWeatherInformationOnStart(List<Place> listOfFavouriteLocations){
+        if(listOfFavouriteLocations == null)
+            return;
+
+        if(listOfFavouriteLocations.size() == 0){
+            settings.setPlace(null);
+            settings.setActuallyDisplayingCity(null);
+            sharedPreferenceHelper.saveSettings(settings);
+        }
+
+        if(settings.getActuallyDisplayingCity() == null){
+            if(!listOfFavouriteLocations.isEmpty()){
+                Place firstFavouritePlace = listOfFavouriteLocations.get(0);
+                settings.setActuallyDisplayingCity(firstFavouritePlace.getCity());
+                settings.setPlace(firstFavouritePlace);
+                sharedPreferenceHelper.saveSettings(settings);
+            }
+        }
+
+        if(settings.getActuallyDisplayingCity() != null){
+            //1. Check if information in settings are valid (date).
+            //2. If are not valid download it again.
+            //3. Display to the user.
+            showToast(settings.getActuallyDisplayingCity());
+        }
+    }
+
     public void onSunAndMoonButtonClicked(View view){
         Intent astroInfoActivity = new Intent(this, AstroInfoActivity.class);
         startActivity(astroInfoActivity);
+    }
+
+    private List<Place> getFavouritesFromDatabase(){
+        ArrayList<Place> listOfLocations;
+
+        DBHelper dbHelper = new DBHelper(this);
+        listOfLocations = dbHelper.getFavourites();
+        dbHelper.close();
+
+        return listOfLocations;
     }
 }

@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
+import com.politechnika.lukasz.models.core.Settings;
+import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 
 import javax.inject.Inject;
 
@@ -16,7 +17,7 @@ import javax.inject.Inject;
 public class MainInfoFragment extends Fragment {
 
     @Inject
-    ISharedPreferenceHelper sharedPreferenceHelper;
+    Settings settings;
 
     public MainInfoFragment() {}
 
@@ -29,10 +30,10 @@ public class MainInfoFragment extends Fragment {
 
         String text =
                 "Latitude: " +
-                sharedPreferenceHelper.getString("latitude", "") +
+                String.valueOf(settings.getLatitude()) +
                 "\n" +
                 "Longitude: " +
-                sharedPreferenceHelper.getString("longitude", "");
+                String.valueOf(settings.getLongitude());
 
         longLatTextView.setText(text);
 

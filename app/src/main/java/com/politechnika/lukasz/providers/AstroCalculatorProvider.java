@@ -3,7 +3,8 @@ package com.politechnika.lukasz.providers;
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
+import com.politechnika.lukasz.models.core.Settings;
+import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -13,13 +14,13 @@ import javax.inject.Inject;
 
 public class AstroCalculatorProvider implements IAstroCalculatorProvider {
     @Inject
-    ISharedPreferenceHelper sharedPreferenceHelper;
+    Settings settings;
 
     @Override
     public AstroCalculator getAstroCalculator() {
         DaggerApplication.component().inject(this);
-        String latitudeString = sharedPreferenceHelper.getString("latitude", "0");
-        String longitudeString = sharedPreferenceHelper.getString("longitude", "0");
+        String latitudeString = String.valueOf(settings.getLatitude());
+        String longitudeString = String.valueOf(settings.getLongitude());
 
         if(latitudeString.equals(""))
             latitudeString = "0";

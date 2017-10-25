@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.helpers;
+package com.politechnika.lukasz.services;
 
 import android.Manifest;
 import android.app.Activity;

@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.models.dto.YahooWeather;
-import com.politechnika.lukasz.web.DtoConverter;
-import com.politechnika.lukasz.web.UrlBuilder;
+
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;

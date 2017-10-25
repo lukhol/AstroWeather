@@ -1,19 +1,15 @@
 package com.politechnika.lukasz.views.activities;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Toast;
+
 import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
+import com.politechnika.lukasz.models.core.Settings;
+import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.validators.IStringInputValidator;
 
 import javax.inject.Inject;
@@ -25,6 +21,9 @@ public class SettingsActivity extends BaseActivity {
 
     @Inject
     ISharedPreferenceHelper sharedPreferenceHelper;
+
+    @Inject
+    Settings settings;
 
     private EditText longitudeEditText;
     private EditText latitudeEditText;
@@ -45,9 +44,9 @@ public class SettingsActivity extends BaseActivity {
 
         getViewsById();
 
-        latitudeEditText.setText(sharedPreferenceHelper.getString("latitude", ""));
-        longitudeEditText.setText(sharedPreferenceHelper.getString("longitude", ""));
-        refreshTimeEditText.setText(sharedPreferenceHelper.getString("refreshTime", "15"));
+        latitudeEditText.setText(String.valueOf(settings.getLatitude()));
+        longitudeEditText.setText(String.valueOf(settings.getLongitude()));
+        refreshTimeEditText.setText(String.valueOf(settings.getRefreshTime()));
 
         addTextChangedListenerToLongitude();
         addTextChangedListenerToLatitude();
@@ -87,11 +86,13 @@ public class SettingsActivity extends BaseActivity {
             longitudeString = "0";
 
         if(refreshTimeString.equals("0") || refreshTimeString.equals(""))
-            refreshTimeString = "1";
+            refreshTimeString = "10";
 
-        sharedPreferenceHelper.saveString("latitude", latitudeString);
-        sharedPreferenceHelper.saveString("longitude", longitudeString);
-        sharedPreferenceHelper.saveString("refreshTime", refreshTimeString);
+        settings.setLatitude(Float.parseFloat(latitudeString));
+        settings.setLongitude(Float.parseFloat(longitudeString));
+        settings.setRefreshTime(Float.parseFloat(refreshTimeString));
+
+        sharedPreferenceHelper.saveSettings(settings);
 
         super.onBackPressed();
     }
@@ -111,8 +112,8 @@ public class SettingsActivity extends BaseActivity {
                         afterChanged = afterChanged.substring(0, afterChanged.length()-1);
                         longitudeEditText.setText(afterChanged);
                         longitudeEditText.setSelection(afterChanged.length());
+                        showToast("Wrong input");
                     }
-                    showToast("Wrong input");
                 }
             }
 
@@ -138,8 +139,8 @@ public class SettingsActivity extends BaseActivity {
                         afterChanged = afterChanged.substring(0, afterChanged.length()-1);
                         latitudeEditText.setText(afterChanged);
                         latitudeEditText.setSelection(afterChanged.length());
+                        showToast("Wrong input");
                     }
-                    showToast("Wrong input");
                 }
             }
 

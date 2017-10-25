@@ -4,17 +4,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.views.fragments.MoonFragment;
 import com.politechnika.lukasz.views.fragments.SunFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.helpers.ISharedPreferenceHelper;
+import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.R;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,7 +22,7 @@ import javax.inject.Inject;
 public class AstroInfoActivity extends BaseActivity {
 
     @Inject
-    ISharedPreferenceHelper sharedPreferenceHelper;
+    Settings settings;
 
     private static final int NUM_PAGES = 2;
     private ViewPager mPager;
@@ -64,8 +62,8 @@ public class AstroInfoActivity extends BaseActivity {
     }
 
     private void setupTimer(){
-        String refrehTimeString = sharedPreferenceHelper.getString("refreshTime", "1");
-        double refreshTimeDouble = Double.parseDouble(refrehTimeString);
+        double refreshTimeDouble = settings.getRefreshTime();
+
 
         //To seconds
         refreshTimeDouble *= 1000;

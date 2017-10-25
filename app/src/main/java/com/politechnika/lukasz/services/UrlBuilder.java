@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.web;
+package com.politechnika.lukasz.services;
 
 import android.net.Uri;
 

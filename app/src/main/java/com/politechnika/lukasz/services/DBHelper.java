@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.google.gson.Gson;
 import com.politechnika.lukasz.models.core.Place;
+import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.models.core.Weather;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -185,4 +185,53 @@ public class DBHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL(DROP_FAV_STATEMENT);
         this.getWritableDatabase().execSQL(CREATE_FAV_STATEMENT);
     }
+
+    /*
+    private final class FavouritesCityEntry{
+        private FavouritesCityEntry() {}
+
+        public static final String TABLE_NAME = "favouritesCity";
+        public static final String COLUMN_ID = "cityId";
+        public static final String COLUMN_CITY = "city";
+        public static final String COLUMN_LATITUDE = "latitude";
+        public static final String COLUMN_LONGITUDE = "longitude";
+        public static final String COLUMN_WEATHER_JSON = "weatherJson";
+        public static final String COLUMN_LAST_UPDATE_TIME = "lastUpdateTime";
+
+        public static final String CREATE_STATEMENT =
+                "CREATE TABLE IF NOT EXISTS "+
+                        TABLE_NAME + "(" +
+                        COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                        COLUMN_CITY + " TEXT UNIQUE, " +
+                        COLUMN_LATITUDE + " REAL, " +
+                        COLUMN_LONGITUDE + " REAL, " +
+                        COLUMN_WEATHER_JSON + " TEXT, " +
+                        COLUMN_LAST_UPDATE_TIME + " TEXT " + ");";
+
+        public static final String DROP_FAV_STATEMENT = "DROP TABLE IF EXISTS "+ TABLE_NAME;
+    }
+
+    private final class SettingsEntry{
+        private SettingsEntry() {}
+
+        public static final String TABLE_NAME = "settings";
+        public static final String COLUMN_ID = "settingsId";
+        public static final String COLUMN_LATITUDE = "latitude";
+        public static final String COLUMN_LONGITUDE = "longitude";
+        public static final String COLUMN_REFRESH_TIME = "refreshTime";
+        public static final String COLUMN_ACTUALLY_DISPLAYING_CITY = "actuallyDisplayingCity";
+        public static final String COLUMN_KMPH = "kmph";
+        public static final String COLUMN_CELSIUS = "celsius";
+
+        public static final String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS" +
+                SettingsEntry.TABLE_NAME + "(" +
+                SettingsEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                SettingsEntry.COLUMN_LATITUDE + " TEXT, " +
+                SettingsEntry.COLUMN_LONGITUDE + " TEXT, " +
+                SettingsEntry.COLUMN_REFRESH_TIME + " TEXT, " +
+                SettingsEntry.COLUMN_ACTUALLY_DISPLAYING_CITY + " TEXT, " +
+                SettingsEntry.COLUMN_KMPH + " INTEGER, " +
+                SettingsEntry.COLUMN_CELSIUS + " INTEGER " + ");";
+    }
+    */
 }

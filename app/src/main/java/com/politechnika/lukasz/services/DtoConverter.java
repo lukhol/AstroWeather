@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.web;
+package com.politechnika.lukasz.services;
 
 import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.models.dto.YahooWeather;

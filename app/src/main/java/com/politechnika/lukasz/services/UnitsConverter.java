@@ -1,4 +1,4 @@
-package com.politechnika.lukasz.helpers;
+package com.politechnika.lukasz.services;
 
 /**
  * Created by Lukasz on 24.10.2017.
