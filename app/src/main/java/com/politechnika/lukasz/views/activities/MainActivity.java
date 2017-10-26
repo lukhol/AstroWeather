@@ -29,7 +29,6 @@ import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.R;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -89,8 +88,7 @@ public class MainActivity extends BaseActivity
         if(permissionHelper != null)
             permissionHelper.checkPermission(this);
 
-        List<Place> listOfLocationsFromDatabase = getFavouritesFromDatabase();
-        createCityMenuItems(listOfLocationsFromDatabase);
+        createCityMenuItems(getFavouritesFromDatabase());
     }
 
     @Override
@@ -179,13 +177,9 @@ public class MainActivity extends BaseActivity
     }
 
     private void resolveWeatherInformationOnMenuItemClicked(String city){
-        //1. Load information from database
-        //2. If information about location exist in db check if are valid
-        //3. If not exist or not valid download it from yahoo server.
-        //4. Display to the user
-        showToast(city);
         settings.setActuallyDisplayingCity(city);
         sharedPreferenceHelper.saveSettings(settings);
+        resolveWeatherInformationOnStart(getFavouritesFromDatabase());
     }
 
     private void resolveWeatherInformationOnStart(List<Place> listOfFavouriteLocations){
@@ -211,24 +205,17 @@ public class MainActivity extends BaseActivity
             //1. Check if information in settings are valid (date).
             //2. If are not valid download it again.
             //3. Display to the user.
+
             String actuallyDisplayingCityString = settings.getActuallyDisplayingCity();
             Place actuallyDisplayingCityPlace = settings.getPlace();
 
             if(!actuallyDisplayingCityPlace.getCity().equals(actuallyDisplayingCityString))
                 settings.setPlace(getFavouriteFromDatabase(actuallyDisplayingCityString));
 
-            if(actuallyDisplayingCityPlace == null){
-                DBHelper dbHelper = new DBHelper(getActivity());
-                actuallyDisplayingCityPlace = dbHelper.getFavourite(actuallyDisplayingCityString);
-                settings.setPlace(actuallyDisplayingCityPlace);
-                dbHelper.close();
-            }
-
             Timestamp timestampFromDb = null;
 
             try{
                 timestampFromDb = Timestamp.valueOf(actuallyDisplayingCityPlace.getLastUpdateTime());
-
             } catch (Exception e) {
 
             }
@@ -277,6 +264,25 @@ public class MainActivity extends BaseActivity
                 }
 
                 if(weather != null){
+                    Place place = new Place();
+                    try {
+                        place.setLongitude(Double.parseDouble(weather.getItem().getLongitude()));
+                        place.setLatitude(Double.parseDouble(weather.getItem().getLatitude()));
+                        place.setCity(weather.getLocation().getCity());
+                        place.setLastUpdateTime(Utils.getCurrentTimeStamp().toString());
+                        place.setWeather(weather);
+                    } catch (Exception e){
+
+                    }
+
+                    settings.setActuallyDisplayingCity(place.getCity());
+                    settings.setPlace(place);
+                    sharedPreferenceHelper.saveSettings(settings);
+
+                    DBHelper dbHelper = new DBHelper(getActivity());
+                    dbHelper.updateFavourite(place);
+                    dbHelper.close();
+
                     waitingLayout(false, null);
                 }
             }
