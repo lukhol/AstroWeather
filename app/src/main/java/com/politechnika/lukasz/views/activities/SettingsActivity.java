@@ -50,6 +50,7 @@ public class SettingsActivity extends BaseActivity {
 
         addTextChangedListenerToLongitude();
         addTextChangedListenerToLatitude();
+        addTextChangedListenerToRefreshTime();
     }
 
     private void getViewsById(){
@@ -74,6 +75,9 @@ public class SettingsActivity extends BaseActivity {
             double refreshTimeDouble = Double.parseDouble(refreshTimeString);
             if(refreshTimeDouble < 0.1)
                 refreshTimeString = "0.1";
+
+            if(refreshTimeDouble > 100)
+                refreshTimeString = "100";
         }
         catch (Exception e){
             refreshTimeString = "1";
@@ -141,6 +145,30 @@ public class SettingsActivity extends BaseActivity {
                         latitudeEditText.setSelection(afterChanged.length());
                         showToast("Wrong input");
                     }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void addTextChangedListenerToRefreshTime(){
+        refreshTimeEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String afterChanged = refreshTimeEditText.getText().toString();
+                if(afterChanged.length() > 8) {
+                    afterChanged = afterChanged.substring(0, afterChanged.length() - 1);
+                    refreshTimeEditText.setText(afterChanged);
+                    refreshTimeEditText.setSelection(afterChanged.length());showToast("Wrong input");
                 }
             }
 
