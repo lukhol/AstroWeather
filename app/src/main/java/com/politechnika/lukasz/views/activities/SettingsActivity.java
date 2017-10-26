@@ -1,10 +1,12 @@
 package com.politechnika.lukasz.views.activities;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
@@ -29,11 +31,10 @@ public class SettingsActivity extends BaseActivity {
     private EditText latitudeEditText;
     private EditText refreshTimeEditText;
 
-    private RadioButton kmphRadioButton;
-    private RadioButton mphRadioButton;
+    private RadioGroup velocityRadioGroup;
+    private RadioGroup temperatureRadioGroup;
 
-    private RadioButton celsiusRadioButton;
-    private RadioButton fahrenheitRadioButton;
+    private RadioButton kmphRadioButton, mphRadioButton, celsiusRadioButton, fahrenheitRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,30 @@ public class SettingsActivity extends BaseActivity {
 
         getViewsById();
 
-        latitudeEditText.setText(String.valueOf(settings.getLatitude()));
-        longitudeEditText.setText(String.valueOf(settings.getLongitude()));
-        refreshTimeEditText.setText(String.valueOf(settings.getRefreshTime()));
+        setSettingsToViews();
 
         addTextChangedListenerToLongitude();
         addTextChangedListenerToLatitude();
         addTextChangedListenerToRefreshTime();
+        setVelocityRadioGroupListener();
+        setTemperatureRadioGroupListener();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        validateFieldsAndSave();
+        super.onBackPressed();
     }
 
     private void getViewsById(){
@@ -58,15 +76,32 @@ public class SettingsActivity extends BaseActivity {
         latitudeEditText = (EditText)findViewById(R.id.latitudeEditText);
         refreshTimeEditText = (EditText)findViewById(R.id.refreshTimeEditText);
 
-        kmphRadioButton = (RadioButton)findViewById(R.id.kmphRadioButton);
-        mphRadioButton = (RadioButton)findViewById(R.id.mphRadioButton);
+        velocityRadioGroup = (RadioGroup)findViewById(R.id.velocityRadioGroup);
+        temperatureRadioGroup = (RadioGroup)findViewById(R.id.temperatureRadioGroup);
 
-        celsiusRadioButton = (RadioButton)findViewById(R.id.celsiusRadioButton);
-        fahrenheitRadioButton = (RadioButton)findViewById(R.id.fahrenheitRadioButton);
+        kmphRadioButton = (RadioButton) findViewById(R.id.kmphRadioButton);
+        mphRadioButton = (RadioButton) findViewById(R.id.mphRadioButton);
+        celsiusRadioButton = (RadioButton) findViewById(R.id.celsiusRadioButton);
+        fahrenheitRadioButton = (RadioButton) findViewById(R.id.fahrenheitRadioButton);
     }
 
-    @Override
-    public void onBackPressed(){
+    private void setSettingsToViews(){
+        latitudeEditText.setText(String.valueOf(settings.getLatitude()));
+        longitudeEditText.setText(String.valueOf(settings.getLongitude()));
+        refreshTimeEditText.setText(String.valueOf(settings.getRefreshTime()));
+
+        if(settings.isKmph())
+            kmphRadioButton.setChecked(true);
+        else
+            mphRadioButton.setChecked(true);
+
+        if(settings.isCelsius())
+            celsiusRadioButton.setChecked(true);
+        else
+            fahrenheitRadioButton.setChecked(true);
+    }
+
+    private void validateFieldsAndSave(){
         String latitudeString = latitudeEditText.getText().toString();
         String longitudeString = longitudeEditText.getText().toString();
         String refreshTimeString = refreshTimeEditText.getText().toString();
@@ -97,8 +132,6 @@ public class SettingsActivity extends BaseActivity {
         settings.setRefreshTime(Float.parseFloat(refreshTimeString));
 
         sharedPreferenceHelper.saveSettings(settings);
-
-        super.onBackPressed();
     }
 
     private void addTextChangedListenerToLongitude(){
@@ -179,14 +212,39 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    private void setVelocityRadioGroupListener(){
+        velocityRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int checkedId) {
+                if(checkedId == R.id.kmphRadioButton)
+                    settings.setKmph(true);
+                else if(checkedId == R.id.mphRadioButton)
+                    settings.setKmph(false);
 
-        if(id == android.R.id.home){
-            onBackPressed();
-        }
+                sharedPreferenceHelper.saveSettings(settings);
+            }
+        });
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void setTemperatureRadioGroupListener(){
+        temperatureRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int checkedId) {
+                switch(checkedId){
+                    case R.id.celsiusRadioButton:
+                        settings.setCelsius(true);
+                        break;
+
+                    case R.id.fahrenheitRadioButton:
+                        settings.setCelsius(false);
+                        break;
+
+                    default:
+                        settings.setCelsius(true);
+                }
+
+                sharedPreferenceHelper.saveSettings(settings);
+            }
+        });
     }
 }

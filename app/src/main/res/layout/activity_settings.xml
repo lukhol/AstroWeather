@@ -130,13 +130,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp">
+
                 <RadioButton
-                    android:checked="true"
                     android:id="@+id/kmphRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
-                    android:text="km/h" />
+                    android:checked="true"
+                    android:text="km/h"
+                    android:textColor="@color/textColor" />
+
                 <RadioButton
                     android:id="@+id/mphRadioButton"
                     android:layout_width="wrap_content"
