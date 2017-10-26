@@ -7,17 +7,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/cloudy_1">
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="56dp">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="dsdasdasdsa"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/textColor"/>
+        <fragment
+            android:id="@+id/firstFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.politechnika.lukasz.views.fragments.SunFragment"
+            tools:layout="@layout/fragment_sun" />
+        <fragment
+            android:id="@+id/secondFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.politechnika.lukasz.views.fragments.MoonFragment"
+            tools:layout="@layout/fragment_moon" />
     </LinearLayout>
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

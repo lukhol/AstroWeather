@@ -58,10 +58,10 @@ public class SunFragment extends Fragment {
             return;
 
         sunriseTimeTextView.setText("-time: " + sunInfo.getSunrise().toString().substring(10,20));
-        sunriseAzimuthTextView.setText("-azimuth: " + sunInfo.getAzimuthRise());
+        sunriseAzimuthTextView.setText("-azimuth: " + (Math.floor(sunInfo.getAzimuthRise() * 100) / 100) + "°");
 
         sunsetTimeTextView.setText("-time: " + sunInfo.getSunset().toString().substring(10,20));
-        sunsetAzimuthTextView.setText("-azimuth: " + sunInfo.getAzimuthSet());
+        sunsetAzimuthTextView.setText("-azimuth: " + (Math.floor(sunInfo.getAzimuthSet() * 100) / 100) + "°");
 
         twilightMorningTextView.setText("-morning: " + sunInfo.getTwilightMorning().toString().substring(10,20));
         twilightEveningTextView.setText("-evening: " + sunInfo.getTwilightEvening().toString().substring(10,20));

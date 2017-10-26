@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:text="Sun informations:"
         android:textColor="@color/textColor"
-        android:textSize="25sp"
+        android:textSize="@dimen/my_title_big_text_size"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"/>
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/sun_moon_image_size"
+        android:layout_height="@dimen/sun_moon_image_size"
         android:src="@drawable/ic_sun"
         android:paddingTop="6dp"
         android:layout_marginRight="6dp"
@@ -42,6 +42,7 @@
                 android:layout_weight="1"
                 android:text="Sunrise:"
                 android:textColor="@color/textColor"
+                android:textSize="@dimen/my_title_small_text_size"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -51,6 +52,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:text="-time: "
+                android:textSize="@dimen/my_normal_text_size"
                 android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
@@ -60,6 +62,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="-azimuth: "
+
+                android:textSize="@dimen/my_normal_text_size"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
@@ -86,6 +90,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Sunset:"
+                android:textSize="@dimen/my_title_small_text_size"
                 android:textColor="@color/textColor"
                 android:textStyle="bold" />
 
@@ -96,6 +101,8 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:text="-time: "
+
+                android:textSize="@dimen/my_normal_text_size"
                 android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
@@ -103,6 +110,8 @@
                 android:id="@+id/sunsetAzimuthTextView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+
+                android:textSize="@dimen/my_normal_text_size"
                 android:layout_weight="1"
                 android:text="-azimuth: "
                 android:layout_marginLeft="5dp"
@@ -129,6 +138,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Twilight :"
+                android:textSize="@dimen/my_title_small_text_size"
                 android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
@@ -139,6 +149,8 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:text="-morning: "
+
+                android:textSize="@dimen/my_normal_text_size"
                 android:textColor="@color/textColor"
                 android:layout_gravity="center"/>
 
@@ -148,6 +160,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="-evening: "
+
+                android:textSize="@dimen/my_normal_text_size"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/textColor"
                 android:layout_gravity="center"/>

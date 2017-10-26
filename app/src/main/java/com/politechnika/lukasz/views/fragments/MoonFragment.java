@@ -66,6 +66,6 @@ public class MoonFragment extends Fragment {
 
         moonPhaseTextView.setText("-illumination: " + "" + moonPhase + "%");
 
-        moonAgeTextView.setText("-age: " + "" + moonInfo.getAge());
+        moonAgeTextView.setText("-age: " + "" + Math.round(moonInfo.getAge()) + "days.");
     }
 }
