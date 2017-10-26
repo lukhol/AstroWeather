@@ -23,10 +23,9 @@ import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.views.MyListViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 
-public class EditFavLocationsActivity extends BaseActivity {
+public class EditFavLocationsActivity extends BaseActivity {;
 
     @Inject
     IWeatherService weatherService;

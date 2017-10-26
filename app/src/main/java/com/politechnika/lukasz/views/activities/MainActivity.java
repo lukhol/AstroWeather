@@ -1,8 +1,10 @@
 package com.politechnika.lukasz.views.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,16 +18,19 @@ import android.widget.TextView;
 
 import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Settings;
+import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.IWeatherService;
+import com.politechnika.lukasz.services.Utils;
 import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.services.IPermissionHelper;
 import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.R;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity
@@ -86,7 +91,13 @@ public class MainActivity extends BaseActivity
 
         List<Place> listOfLocationsFromDatabase = getFavouritesFromDatabase();
         createCityMenuItems(listOfLocationsFromDatabase);
-        resolveWeatherInformationOnStart(listOfLocationsFromDatabase);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        resolveWeatherInformationOnStart(getFavouritesFromDatabase());
     }
 
     private void createCityMenuItems(List<Place> listOfLocations){
@@ -162,13 +173,18 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    public void onSunAndMoonButtonClicked(View view){
+        Intent astroInfoActivity = new Intent(this, AstroInfoActivity.class);
+        startActivity(astroInfoActivity);
+    }
+
     private void resolveWeatherInformationOnMenuItemClicked(String city){
         //1. Load information from database
         //2. If information about location exist in db check if are valid
         //3. If not exist or not valid download it from yahoo server.
         //4. Display to the user
         showToast(city);
-        settings.setActuallyDisplayingCity("dsadsadsadsadsadsa");
+        settings.setActuallyDisplayingCity(city);
         sharedPreferenceHelper.saveSettings(settings);
     }
 
@@ -195,22 +211,75 @@ public class MainActivity extends BaseActivity
             //1. Check if information in settings are valid (date).
             //2. If are not valid download it again.
             //3. Display to the user.
+            String actuallyDisplayingCityString = settings.getActuallyDisplayingCity();
+            Place actuallyDisplayingCityPlace = settings.getPlace();
+
+            if(!actuallyDisplayingCityPlace.getCity().equals(actuallyDisplayingCityString))
+                settings.setPlace(getFavouriteFromDatabase(actuallyDisplayingCityString));
+
+            if(actuallyDisplayingCityPlace == null){
+                DBHelper dbHelper = new DBHelper(getActivity());
+                actuallyDisplayingCityPlace = dbHelper.getFavourite(actuallyDisplayingCityString);
+                settings.setPlace(actuallyDisplayingCityPlace);
+                dbHelper.close();
+            }
+
+            Timestamp timestampFromDb = null;
+
+            try{
+                timestampFromDb = Timestamp.valueOf(actuallyDisplayingCityPlace.getLastUpdateTime());
+
+            } catch (Exception e) {
+
+            }
+
+            if(timestampFromDb == null) {
+                //Download information and set to the settings
+                new GetWeatherAsyncTask().execute(settings.getActuallyDisplayingCity());
+                waitingLayout(true, null);
+                return;
+            }
+
+            long timeBetweenUpdating = Utils.compareTwoTimeStamps(Utils.getCurrentTimeStamp(), timestampFromDb);
+
+            if(timeBetweenUpdating > 15){
+                //Download place informaton
+                new GetWeatherAsyncTask().execute(settings.getActuallyDisplayingCity());
+                waitingLayout(true, null);
+                return;
+            }
+
             showToast(settings.getActuallyDisplayingCity());
         }
     }
 
-    public void onSunAndMoonButtonClicked(View view){
-        Intent astroInfoActivity = new Intent(this, AstroInfoActivity.class);
-        startActivity(astroInfoActivity);
-    }
+    class GetWeatherAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
 
-    private List<Place> getFavouritesFromDatabase(){
-        ArrayList<Place> listOfLocations;
+        @Override
+        protected Pair<Weather, String> doInBackground(String... strings) {
+            Weather weather = null;
+            try{
+                weather = weatherService.getWeather(strings[0]);
+            } catch (Exception e){
+                return new Pair<>(weather, e.getMessage());
+            }
+            return new Pair<>(weather, null);
+        }
 
-        DBHelper dbHelper = new DBHelper(this);
-        listOfLocations = dbHelper.getFavourites();
-        dbHelper.close();
+        protected void onPostExecute(Pair<Weather, String> weatherPair){
+            if(weatherPair != null) {
+                Weather weather = weatherPair.first;
+                String message = weatherPair.second;
 
-        return listOfLocations;
+                if(message != null){
+                    waitingLayout(false, message);
+                    return;
+                }
+
+                if(weather != null){
+                    waitingLayout(false, null);
+                }
+            }
+        }
     }
 }

@@ -13,8 +13,15 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.politechnika.lukasz.R;
+import com.politechnika.lukasz.models.core.Place;
+import com.politechnika.lukasz.services.DBHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseActivity extends AppCompatActivity{
+
+    protected AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         return false;
     }
 
-    protected void showInformationDialog(String title, String message){
+    protected AlertDialog showInformationDialog(String title, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(title).setMessage(message);
@@ -64,5 +71,31 @@ public abstract class BaseActivity extends AppCompatActivity{
 
         AlertDialog dialog = builder.create();
         dialog.show();
+        return dialog;
+    }
+
+    protected void waitingLayout(boolean status, String message){
+        if(status)
+            dialog = showInformationDialog("Loading", "...");
+
+        if(!status && dialog != null)
+            dialog.dismiss();
+
+        if(!status && message != null)
+            dialog = showInformationDialog("Error", message);
+    }
+
+    protected List<Place> getFavouritesFromDatabase(){
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Place> listOfLocations = dbHelper.getFavourites();
+        dbHelper.close();
+        return listOfLocations;
+    }
+
+    protected Place getFavouriteFromDatabase(String city){
+        DBHelper dbHelper = new DBHelper(this);
+        Place place = dbHelper.getFavourite(city);
+        dbHelper.close();
+        return place;
     }
 }
