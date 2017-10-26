@@ -111,7 +111,7 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String afterChanged = longitudeEditText.getText().toString();
-                if(!stringInputValidator.validateLonLang(afterChanged)){
+                if(!stringInputValidator.validateLongitude(afterChanged)){
                     if(afterChanged.length() != 0){
                         afterChanged = afterChanged.substring(0, afterChanged.length()-1);
                         longitudeEditText.setText(afterChanged);
@@ -138,7 +138,7 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String afterChanged = latitudeEditText.getText().toString();
-                if(!stringInputValidator.validateLonLang(afterChanged)){
+                if(!stringInputValidator.validateLatitude(afterChanged)){
                     if(afterChanged.length() != 0){
                         afterChanged = afterChanged.substring(0, afterChanged.length()-1);
                         latitudeEditText.setText(afterChanged);

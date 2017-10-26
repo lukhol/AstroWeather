@@ -5,5 +5,6 @@ package com.politechnika.lukasz.validators;
  */
 
 public interface IStringInputValidator {
-    public boolean validateLonLang(String value);
+    boolean validateLongitude(String value);
+    boolean validateLatitude(String value);
 }

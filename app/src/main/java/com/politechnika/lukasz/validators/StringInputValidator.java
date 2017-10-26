@@ -1,14 +1,37 @@
 package com.politechnika.lukasz.validators;
 
-/**
- * Created by Lukasz on 12.10.2017.
- */
-
 public class StringInputValidator implements  IStringInputValidator {
 
     @Override
-    public boolean validateLonLang(String value) {
-        if(value == null || value.length() == 0)
+    public boolean validateLongitude(String value) {
+        if(validateLonLang(value)){
+            try{
+                float longitude = Float.parseFloat(value);
+                if(longitude < 180 && longitude > -180)
+                    return true;
+            } catch (Exception e){
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean validateLatitude(String value) {
+        if(validateLonLang(value)){
+            try{
+                float latitude = Float.parseFloat(value);
+                if(latitude < 90 && latitude > -90)
+                    return true;
+            } catch (Exception e){
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean validateLonLang(String value) {
+        if(value == null || value.length() == 0 || value.length() > 15)
             return false;
 
         char[] valueAsCharArray = value.toCharArray();

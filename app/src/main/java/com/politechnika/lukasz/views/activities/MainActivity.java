@@ -240,7 +240,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    class GetWeatherAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
+    private class GetWeatherAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
 
         @Override
         protected Pair<Weather, String> doInBackground(String... strings) {
