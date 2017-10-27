@@ -209,8 +209,12 @@ public class MainActivity extends BaseActivity
             String actuallyDisplayingCityString = settings.getActuallyDisplayingCity();
             Place actuallyDisplayingCityPlace = settings.getPlace();
 
-            if(!actuallyDisplayingCityPlace.getCity().equals(actuallyDisplayingCityString))
-                settings.setPlace(getFavouriteFromDatabase(actuallyDisplayingCityString));
+            if(!actuallyDisplayingCityPlace.getCity().equals(actuallyDisplayingCityString)){
+                Place place = getFavouriteFromDatabase(actuallyDisplayingCityString);
+                settings.setPlace(place);
+                actuallyDisplayingCityPlace = place;
+            }
+
 
             Timestamp timestampFromDb = null;
 
