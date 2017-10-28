@@ -10,6 +10,7 @@ import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.views.fragments.MoonFragment;
 import com.politechnika.lukasz.views.fragments.SunFragment;
 import com.politechnika.lukasz.providers.AstroCalculatorProvider;
+import com.politechnika.lukasz.views.fragments.WeatherFragment;
 
 import javax.inject.Singleton;
 import dagger.Component;
@@ -26,6 +27,7 @@ public interface DaggerGraphComponent {
     void inject(MainInfoFragment mainInfoFragment);
     void inject(WeatherService weatherService);
     void inject(EditFavLocationsActivity editFavLocationsActivity);
+    void inject(WeatherFragment weatherFragment);
 
     static final class Initializer {
         private Initializer() {

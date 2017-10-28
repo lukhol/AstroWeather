@@ -14,8 +14,15 @@ import android.widget.Toast;
 import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.models.core.Place;
+import com.politechnika.lukasz.models.core.Settings;
+import com.politechnika.lukasz.services.UnitsConverter;
+
+import javax.inject.Inject;
 
 public class WeatherFragment extends Fragment {
+
+    @Inject
+    Settings settings;
 
     private Place place;
 
@@ -27,29 +34,49 @@ public class WeatherFragment extends Fragment {
 
     public void updatePlace(Place place){
         this.place = place;
+        DaggerApplication.component().inject(this);
 
         if(temperatureTextView == null || conditionTextView == null || conditionImageView == null){
             Toast.makeText(DaggerApplication.getDaggerApp().getApplicationContext(), "WeatherFragment null fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        temperatureTextView.setText(place.getWeather().getItem().getCondition().getTemp() + "°");
-        conditionTextView.setText(place.getWeather().getItem().getCondition().getText());
+        String temperatureString = place.getWeather().getItem().getCondition().getTemp();
+
+        if(!settings.isCelsius())
+            temperatureString = UnitsConverter.celsiusToFahrenheit(temperatureString, true);
+
+        temperatureString += "°";
+
+        String conditionString = place.getWeather().getItem().getCondition().getText();
 
         String stringCode = place.getWeather().getItem().getCondition().getCode();
         Resources resources = DaggerApplication.getDaggerApp().getResources();
         final int resourceId = resources.getIdentifier("img_" + stringCode, "drawable", DaggerApplication.getDaggerApp().getPackageName());
 
-        conditionImageView.setImageResource(resourceId);
-
         String pressureString = place.getWeather().getAtmosphere().getPressure();
         int dotIndex = pressureString.indexOf(".");
-        pressureString = pressureString.substring(0, dotIndex + 2);
+        pressureString = pressureString.substring(0, dotIndex + 2) + " hPa";
 
-        pressureTextView.setText(pressureString + " hPa");
-        humidityTextView.setText(place.getWeather().getAtmosphere().getHumidity() + " %");
-        visibilityTextView.setText(place.getWeather().getAtmosphere().getVisibility() + " km");
-        windVelocityTextView.setText(place.getWeather().getWind().getSpeed() + " km/h");
+        String humidityString = place.getWeather().getAtmosphere().getHumidity() + " %";
+        String visibilityString = place.getWeather().getAtmosphere().getVisibility();
+        String windVelocity = place.getWeather().getWind().getSpeed();
+
+        if(settings.isKmph()){
+            visibilityString += " km";
+            windVelocity += " km/h";
+        } else{
+            visibilityString = UnitsConverter.celsiusToFahrenheit(visibilityString, true) + " miles";
+            windVelocity = UnitsConverter.kmphToMph(windVelocity, true) + " mph";
+        }
+
+        temperatureTextView.setText(temperatureString);
+        conditionTextView.setText(conditionString);
+        conditionImageView.setImageResource(resourceId);
+        pressureTextView.setText(pressureString);
+        humidityTextView.setText(humidityString);
+        visibilityTextView.setText(visibilityString);
+        windVelocityTextView.setText(windVelocity);
     }
 
     @Override

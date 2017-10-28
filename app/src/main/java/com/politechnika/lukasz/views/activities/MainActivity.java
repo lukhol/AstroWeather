@@ -98,7 +98,6 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onResume(){
         super.onResume();
-
         resolveWeatherInformation(getFavouritesFromDatabase());
         weatherFragment.updatePlace(settings.getPlace());
         setTitle(settings.getActuallyDisplayingCity());
@@ -152,7 +151,6 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if(id == R.id.settingsMenuItem){
