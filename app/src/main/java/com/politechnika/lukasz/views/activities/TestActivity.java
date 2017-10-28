@@ -17,7 +17,6 @@ import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.services.Utils;
-import com.politechnika.lukasz.services.WeatherService;
 import com.politechnika.lukasz.views.fragments.IWeatherListener;
 import com.politechnika.lukasz.views.fragments.WeatherFragment;
 
@@ -94,7 +93,6 @@ public class TestActivity extends BaseActivity implements IWeatherListener{
 
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
-
     }
 
     @Override

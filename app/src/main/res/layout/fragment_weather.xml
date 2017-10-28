@@ -176,6 +176,12 @@
                 android:layout_margin="5dp"
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.politechnika.lukasz.views.fragments.BlankFragment"
+            android:id="@+id/fragmentTests"
+            tools:layout="@layout/fragment_blank"
+            android:layout_margin="10dp"/>
     </LinearLayout>
-
 </ScrollView>

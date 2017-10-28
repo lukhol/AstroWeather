@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,15 +30,17 @@ import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.services.IPermissionHelper;
 import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.R;
+import com.politechnika.lukasz.views.fragments.IWeatherListener;
 import com.politechnika.lukasz.views.fragments.WeatherFragment;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IWeatherListener {
     @Inject
     IPermissionHelper permissionHelper;
 
@@ -47,13 +53,21 @@ public class MainActivity extends BaseActivity
     @Inject
     Settings settings;
 
-    WeatherFragment weatherFragment;
+    //WeatherFragment weatherFragment;
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
 
     private TextView menuLongitudeTextView;
     private TextView menuLatitudeTextView;
+
+    SwipeRefreshLayout swipeContainer;
+    ViewPager mPager;
+    ScreenSlidePagerAdapter mPagerAdapter;
+
+    public List<WeatherFragment> listOfWeatherFragments = new ArrayList<>();
+    private List<Place> listOfPlaces;
+    private WeatherFragment visibleWeatherFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +80,7 @@ public class MainActivity extends BaseActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Navigation:
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
@@ -86,21 +101,88 @@ public class MainActivity extends BaseActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Prepare list of database fragments:
+        listOfPlaces = getFavouritesFromDatabase();
+
+        //ViewPager:
+        mPager = (ViewPager)findViewById(R.id.mainViewPager);
+        if(mPager != null) {
+            mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+            mPager.setAdapter(mPagerAdapter);
+            mPager.setOffscreenPageLimit(10);
+            mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    visibleWeatherFragment = listOfWeatherFragments.get(position);
+                    String cityName = listOfPlaces.get(position).getCity();
+                    settings.setActuallyDisplayingCity(cityName);
+                    sharedPreferenceHelper.saveSettings(settings);
+                    resolveWeatherInformation(getFavouritesFromDatabase());
+                    setTitle(cityName);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+        }
+
+        //Swipe container:
+        /*
+        swipeContainer = (SwipeRefreshLayout)findViewById(R.id.mainSwipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        */
         if(permissionHelper != null)
             permissionHelper.checkPermission(this);
 
         createCityMenuItems(getFavouritesFromDatabase());
+    }
 
-        weatherFragment = new WeatherFragment();
-        setFragment(R.id.fragment_container_one, weatherFragment);
+    @Override
+    public void requestPlace(int position) {
+        if(listOfPlaces == null || listOfWeatherFragments == null)
+            return;
+
+        if(listOfPlaces.size() - 1 == position){
+            for(int i = 0 ; i < listOfPlaces.size() ; i++){
+                if(listOfPlaces.get(i).getCity().equals(settings.getActuallyDisplayingCity())){
+                    mPager.setCurrentItem(i);
+                    break;
+                }
+            }
+        }
+
+        if(listOfPlaces.size() < position || listOfWeatherFragments.size() < position)
+            return;
+
+
+        Place placeToDisplay = listOfPlaces.get(position);
+
+        WeatherFragment senderRequestFragment = listOfWeatherFragments.get(position);
+        senderRequestFragment.updatePlace(placeToDisplay);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        resolveWeatherInformation(getFavouritesFromDatabase());
-        weatherFragment.updatePlace(settings.getPlace());
-        setTitle(settings.getActuallyDisplayingCity());
+        listOfPlaces = getFavouritesFromDatabase();
+        //resolveWeatherInformation(getFavouritesFromDatabase());
+        //weatherFragment.updatePlace(settings.getPlace());
+        //setTitle(settings.getActuallyDisplayingCity());
     }
 
     private void createCityMenuItems(List<Place> listOfLocations){
@@ -164,10 +246,7 @@ public class MainActivity extends BaseActivity
         else if(id == R.id.editFavouriteLocationsMenuItem){
             Intent editFavLocationsIntent = new Intent(getApplicationContext(), EditFavLocationsActivity.class);
             startActivity(editFavLocationsIntent);
-        } else if(id == R.id.testMenuItem) {
-            Intent testIntent = new Intent(getApplicationContext(), TestActivity.class);
-            startActivity(testIntent);
-        } else {
+        }  else {
             resolveWeatherInformationOnMenuItemClicked(item.getTitle().toString());
         }
 
@@ -186,7 +265,11 @@ public class MainActivity extends BaseActivity
     private void resolveWeatherInformationOnMenuItemClicked(String city){
         settings.setActuallyDisplayingCity(city);
         sharedPreferenceHelper.saveSettings(settings);
-        resolveWeatherInformation(getFavouritesFromDatabase());
+        for(int i = 0 ; i < listOfPlaces.size() ; i++){
+            if(listOfPlaces.get(i).getCity().equals(city)){
+                mPager.setCurrentItem(i);
+            }
+        }
     }
 
     private void resolveWeatherInformation(List<Place> listOfFavouriteLocations){
@@ -246,10 +329,8 @@ public class MainActivity extends BaseActivity
                 return;
             }
 
-            weatherFragment.updatePlace(settings.getPlace());
+            visibleWeatherFragment.updatePlace(settings.getPlace());
             setTitle(settings.getActuallyDisplayingCity());
-
-            showToast(settings.getActuallyDisplayingCity());
         }
     }
 
@@ -296,11 +377,37 @@ public class MainActivity extends BaseActivity
                     dbHelper.updateFavourite(place);
                     dbHelper.close();
 
-                    weatherFragment.updatePlace(settings.getPlace());
+                    visibleWeatherFragment.updatePlace(settings.getPlace());
                     setTitle(settings.getActuallyDisplayingCity());
                     waitingLayout(false, null);
                 }
             }
+        }
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm){
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position){
+            WeatherFragment fragment;
+            if(listOfWeatherFragments.size() < position + 1) {
+                fragment = new WeatherFragment();
+                fragment.setPosition(position);
+                listOfWeatherFragments.add(fragment);
+            }
+            else{
+                fragment = listOfWeatherFragments.get(position);
+            }
+
+            return fragment;
+        }
+
+        @Override
+        public int getCount(){
+            return listOfPlaces.size();
         }
     }
 }
