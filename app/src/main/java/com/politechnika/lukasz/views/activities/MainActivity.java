@@ -27,6 +27,7 @@ import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.services.IPermissionHelper;
 import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.R;
+import com.politechnika.lukasz.views.fragments.WeatherFragment;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setFragment(R.id.fragment_container_one, new MainInfoFragment());
+        setFragment(R.id.fragment_container_one, new WeatherFragment());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -160,6 +161,9 @@ public class MainActivity extends BaseActivity
         else if(id == R.id.editFavouriteLocationsMenuItem){
             Intent editFavLocationsIntent = new Intent(getApplicationContext(), EditFavLocationsActivity.class);
             startActivity(editFavLocationsIntent);
+        } else if(id == R.id.testMenuItem) {
+            Intent testIntent = new Intent(getApplicationContext(), TestActivity.class);
+            startActivity(testIntent);
         } else {
             resolveWeatherInformationOnMenuItemClicked(item.getTitle().toString());
         }
@@ -214,7 +218,6 @@ public class MainActivity extends BaseActivity
                 settings.setPlace(place);
                 actuallyDisplayingCityPlace = place;
             }
-
 
             Timestamp timestampFromDb = null;
 

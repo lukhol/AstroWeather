@@ -20,5 +20,12 @@
             android:icon="@drawable/ic_astro"
             android:title="Astro Informations"
             android:orderInCategory="1001"/>
+
+        <item
+            android:id="@+id/testMenuItem"
+            android:icon="@drawable/ic_astro"
+            android:title="Test menu item"
+            android:orderInCategory="1002"
+            />
     </group>
 </menu>
