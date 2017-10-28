@@ -9,12 +9,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.services.DBHelper;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +46,29 @@ public abstract class BaseActivity extends AppCompatActivity{
             actionBar.setDisplayHomeAsUpEnabled(true);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        TextView toolbarTitleTextView = null;
+        for(int i = 0 ; i < toolbar.getChildCount() ; ++i){
+            View child = toolbar.getChildAt(i);
+            if(child instanceof TextView){
+                toolbarTitleTextView = (TextView)child;
+                break;
+            }
+        }
+
+        if(toolbarTitleTextView != null){
+            toolbarTitleTextView.setGravity(Gravity.CENTER);
+        }
     }
 
     protected AppCompatActivity getActivity(){
         return this;
+    }
+
+    protected void setSubtitle(String subtitle){
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null)
+            actionBar.setSubtitle(subtitle);
     }
 
     protected boolean isOnline(){

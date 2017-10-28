@@ -1,7 +1,7 @@
 package com.politechnika.lukasz.views.fragments;
 
+import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.services.UnitsConverter;
+import com.politechnika.lukasz.views.activities.BaseActivity;
 
 import javax.inject.Inject;
 
@@ -25,12 +26,30 @@ public class WeatherFragment extends Fragment {
     Settings settings;
 
     private Place place;
+    private int position = -1;
+    private IWeatherListener weatherListener;
 
     private TextView temperatureTextView, conditionTextView;
     private TextView pressureTextView, windVelocityTextView, humidityTextView, visibilityTextView;
     private ImageView conditionImageView;
 
     public WeatherFragment() {}
+
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+    public int getPosition(){
+        return position;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof IWeatherListener){
+            weatherListener = ((IWeatherListener)context);
+        }
+    }
 
     public void updatePlace(Place place){
         this.place = place;
@@ -83,6 +102,10 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         getFieldsById(view);
+
+        if(position >= 0 && weatherListener != null)
+            weatherListener.requestPlace(position);
+
         return view;
     }
 

@@ -6,6 +6,7 @@ import com.politechnika.lukasz.views.activities.AstroInfoActivity;
 import com.politechnika.lukasz.views.activities.EditFavLocationsActivity;
 import com.politechnika.lukasz.views.activities.MainActivity;
 import com.politechnika.lukasz.views.activities.SettingsActivity;
+import com.politechnika.lukasz.views.activities.TestActivity;
 import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.views.fragments.MoonFragment;
 import com.politechnika.lukasz.views.fragments.SunFragment;
@@ -28,6 +29,7 @@ public interface DaggerGraphComponent {
     void inject(WeatherService weatherService);
     void inject(EditFavLocationsActivity editFavLocationsActivity);
     void inject(WeatherFragment weatherFragment);
+    void inject(TestActivity testActivity);
 
     static final class Initializer {
         private Initializer() {
