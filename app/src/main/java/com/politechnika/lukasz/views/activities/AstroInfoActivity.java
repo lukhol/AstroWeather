@@ -12,7 +12,6 @@ import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.views.fragments.MoonFragment;
 import com.politechnika.lukasz.views.fragments.SunFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
-import com.politechnika.lukasz.services.ISharedPreferenceHelper;
 import com.politechnika.lukasz.R;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,7 +62,6 @@ public class AstroInfoActivity extends BaseActivity {
 
     private void setupTimer(){
         double refreshTimeDouble = settings.getRefreshTime();
-
 
         //To seconds
         refreshTimeDouble *= 1000;

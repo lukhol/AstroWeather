@@ -12,4 +12,16 @@ public abstract class UnitsConverter {
     public static double kmphToMph(double kilometers){
         return kilometers * 0.621371192;
     }
+
+    public static double inToHpa(double in){ return in / 33.86368260427263;}
+
+    public static String inToHpa(String in){
+        try{
+            double inValue = Double.parseDouble(in);
+            double hpaValue = inToHpa(inValue);
+            return String.valueOf(hpaValue);
+        } catch (Exception e){
+            return "Unit conversion error";
+        }
+    }
 }
