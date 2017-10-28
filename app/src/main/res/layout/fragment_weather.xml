@@ -33,6 +33,7 @@
                 android:src="@drawable/img_0"
                 android:id="@+id/conditionImageView" />
             <TextView
+                android:id="@+id/conditionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/temperatureTextView"
@@ -42,11 +43,12 @@
                 android:layout_centerHorizontal="true"
                 android:text="Storm"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/frame_background_two"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:padding="5dp">
             <TextView
                 android:id="@+id/detailsTextView"
@@ -64,10 +66,10 @@
                 android:background="#FFFFFF"/>
             <ImageView
                 android:id="@+id/detailsImage"
-                android:layout_below="@id/detailsViewSeparator"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/detailsViewSeparator"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerVertical="true"
                 android:src="@drawable/ic_details"
                 android:layout_margin="10dp"
                 android:padding="5dp"
@@ -83,7 +85,7 @@
                 android:textColor="@color/textColor"
                 android:text="Pressure"/>
             <TextView
-                android:id="@+id/idpressureTextView"
+                android:id="@+id/pressureTextView"
                 android:layout_below="@id/detailsViewSeparator"
                 android:layout_marginEnd="5dp"
                 android:layout_margin="5dp"
@@ -111,7 +113,7 @@
                 android:layout_toEndOf="@id/detailsImage"
                 android:text="Wind speed"/>
             <TextView
-                android:id="@+id/velocityTextView"
+                android:id="@+id/windVelocityTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
@@ -165,6 +167,7 @@
                 android:layout_toEndOf="@id/detailsImage"
                 android:layout_margin="5dp"/>
             <TextView
+                android:id="@+id/visibilityTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"

@@ -22,7 +22,6 @@ import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.IWeatherService;
 import com.politechnika.lukasz.services.Utils;
-import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.services.IPermissionHelper;
 import com.politechnika.lukasz.services.ISharedPreferenceHelper;
@@ -31,6 +30,7 @@ import com.politechnika.lukasz.views.fragments.WeatherFragment;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity
@@ -46,6 +46,8 @@ public class MainActivity extends BaseActivity
 
     @Inject
     Settings settings;
+
+    WeatherFragment weatherFragment;
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -63,8 +65,6 @@ public class MainActivity extends BaseActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        setFragment(R.id.fragment_container_one, new WeatherFragment());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -90,13 +90,18 @@ public class MainActivity extends BaseActivity
             permissionHelper.checkPermission(this);
 
         createCityMenuItems(getFavouritesFromDatabase());
+
+        weatherFragment = new WeatherFragment();
+        setFragment(R.id.fragment_container_one, weatherFragment);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
 
-        resolveWeatherInformationOnStart(getFavouritesFromDatabase());
+        resolveWeatherInformation(getFavouritesFromDatabase());
+        weatherFragment.updatePlace(settings.getPlace());
+        setTitle(settings.getActuallyDisplayingCity());
     }
 
     private void createCityMenuItems(List<Place> listOfLocations){
@@ -183,10 +188,10 @@ public class MainActivity extends BaseActivity
     private void resolveWeatherInformationOnMenuItemClicked(String city){
         settings.setActuallyDisplayingCity(city);
         sharedPreferenceHelper.saveSettings(settings);
-        resolveWeatherInformationOnStart(getFavouritesFromDatabase());
+        resolveWeatherInformation(getFavouritesFromDatabase());
     }
 
-    private void resolveWeatherInformationOnStart(List<Place> listOfFavouriteLocations){
+    private void resolveWeatherInformation(List<Place> listOfFavouriteLocations){
         if(listOfFavouriteLocations == null)
             return;
 
@@ -243,6 +248,9 @@ public class MainActivity extends BaseActivity
                 return;
             }
 
+            weatherFragment.updatePlace(settings.getPlace());
+            setTitle(settings.getActuallyDisplayingCity());
+
             showToast(settings.getActuallyDisplayingCity());
         }
     }
@@ -290,6 +298,8 @@ public class MainActivity extends BaseActivity
                     dbHelper.updateFavourite(place);
                     dbHelper.close();
 
+                    weatherFragment.updatePlace(settings.getPlace());
+                    setTitle(settings.getActuallyDisplayingCity());
                     waitingLayout(false, null);
                 }
             }
