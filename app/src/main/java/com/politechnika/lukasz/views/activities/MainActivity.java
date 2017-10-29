@@ -307,6 +307,13 @@ public class MainActivity extends BaseActivity
 
             }
 
+            setTitle(settings.getActuallyDisplayingCity());
+
+            if(!isOnline()){
+                showInformationDialog("No internet connection.", " You are not connected to the internet. Weather information can be old. Connect to the internet and refresh to be up to date!").show();;
+                return;
+            }
+
             if(timestampFromDb == null) {
                 //Download information and set to the settings
                 new GetWeatherAsyncTask().execute(settings.getActuallyDisplayingCity());
@@ -323,7 +330,6 @@ public class MainActivity extends BaseActivity
                 return;
             }
 
-            setTitle(settings.getActuallyDisplayingCity());
         }
     }
 

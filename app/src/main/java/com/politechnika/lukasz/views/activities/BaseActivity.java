@@ -92,7 +92,6 @@ public abstract class BaseActivity extends AppCompatActivity{
             }
         });
 
-
         AlertDialog dialog = builder.create();
         dialog.show();
         return dialog;
