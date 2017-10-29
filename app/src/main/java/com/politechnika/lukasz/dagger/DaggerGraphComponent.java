@@ -2,6 +2,7 @@ package com.politechnika.lukasz.dagger;
 
 import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.services.WeatherService;
+import com.politechnika.lukasz.views.ForecastRecycleViewAdapter;
 import com.politechnika.lukasz.views.activities.AstroInfoActivity;
 import com.politechnika.lukasz.views.activities.EditFavLocationsActivity;
 import com.politechnika.lukasz.views.activities.MainActivity;

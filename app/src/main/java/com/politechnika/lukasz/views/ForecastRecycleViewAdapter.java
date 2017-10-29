@@ -12,16 +12,14 @@ import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.models.dto.components.ForecastItem;
+import com.politechnika.lukasz.services.UnitsConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class ForecastRecycleViewAdapter extends RecyclerView.Adapter {
 
-    @Inject
-    Settings settings;
+    private Settings settings;
 
     private List<ForecastItem> listOfForecast = new ArrayList<>();
     private RecyclerView forecastRecycleView;
@@ -41,9 +39,10 @@ public class ForecastRecycleViewAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public ForecastRecycleViewAdapter(List<ForecastItem> forecastItemsList, RecyclerView recyclerView){
+    public ForecastRecycleViewAdapter(List<ForecastItem> forecastItemsList, RecyclerView recyclerView, Settings settings){
         this.listOfForecast = forecastItemsList;
         this.forecastRecycleView = recyclerView;
+        this.settings = settings;
     }
 
     @Override
@@ -61,10 +60,20 @@ public class ForecastRecycleViewAdapter extends RecyclerView.Adapter {
         Resources resources = DaggerApplication.getDaggerApp().getResources();
         final int imageResourceId = resources.getIdentifier("img_" + stringCode, "drawable", DaggerApplication.getDaggerApp().getPackageName());
 
+        String highTemperature = forecastItem.getHigh();
+        String lowTemperature = forecastItem.getLow();
+
+        if(!settings.isCelsius()){
+            highTemperature = UnitsConverter.celsiusToFahrenheit(highTemperature, true);
+            lowTemperature = UnitsConverter.celsiusToFahrenheit(lowTemperature, true);
+        }
+        highTemperature += "°";
+        lowTemperature += "°";
+
         forecastViewHolder.forecastImageViewRowItem.setImageResource(imageResourceId);
         forecastViewHolder.weekDayTextViewRowItem.setText(forecastItem.getDay());
-        forecastViewHolder.tempMaxTextViewRowItem.setText(forecastItem.getHigh() + "°");
-        forecastViewHolder.tempMinTextViewRowItem.setText(forecastItem.getLow() + "°");
+        forecastViewHolder.tempMaxTextViewRowItem.setText(highTemperature);
+        forecastViewHolder.tempMinTextViewRowItem.setText(lowTemperature);
         forecastViewHolder.conditionTextViewRowItem.setText(forecastItem.getText());
     }
 

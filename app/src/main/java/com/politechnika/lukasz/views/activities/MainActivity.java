@@ -395,7 +395,6 @@ public class MainActivity extends BaseActivity
             if(listOfWeatherFragments.size() < position + 1) {
                 fragment = new WeatherFragment();
                 fragment.setPosition(position);
-                //listOfWeatherFragments.add(fragment);
             }
             else{
                 fragment = listOfWeatherFragments.get(position);

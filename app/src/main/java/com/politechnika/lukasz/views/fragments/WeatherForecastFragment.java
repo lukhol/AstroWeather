@@ -32,7 +32,9 @@ public class WeatherForecastFragment extends Fragment implements IWeather{
 
     private List<ForecastItem> listOfForecastItems = new ArrayList<>();
 
-    public WeatherForecastFragment() {}
+    public WeatherForecastFragment() {
+        DaggerApplication.component().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class WeatherForecastFragment extends Fragment implements IWeather{
         );
         forecastRecycleView.setLayoutManager(linearLayoutManager);
 
-        forecastRecycleViewAdapter = new ForecastRecycleViewAdapter(listOfForecastItems, forecastRecycleView);
+        forecastRecycleViewAdapter = new ForecastRecycleViewAdapter(listOfForecastItems, forecastRecycleView, settings);
         forecastRecycleView.setAdapter(forecastRecycleViewAdapter);
 
         return view;
@@ -57,8 +59,6 @@ public class WeatherForecastFragment extends Fragment implements IWeather{
     public void updatePlace(Place place) {
         if(place == null)
             return;
-
-        DaggerApplication.component().inject(this);
 
         listOfForecastItems.clear();
 
