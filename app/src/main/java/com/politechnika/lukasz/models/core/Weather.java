@@ -8,10 +8,6 @@ import com.politechnika.lukasz.models.dto.components.Location;
 import com.politechnika.lukasz.models.dto.components.Units;
 import com.politechnika.lukasz.models.dto.components.Wind;
 
-/**
- * Created by Lukasz on 23.10.2017.
- */
-
 public class Weather {
     private Units units;
     private Wind wind;

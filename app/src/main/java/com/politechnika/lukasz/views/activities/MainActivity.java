@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -71,7 +72,8 @@ public class MainActivity extends BaseActivity
 
     public static List<WeatherFragment> listOfWeatherFragments;
     private List<Place> listOfPlaces;
-    private WeatherFragment visibleWeatherFragment;
+
+    private final int REFRESH_TIME  = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +131,7 @@ public class MainActivity extends BaseActivity
                 @Override
                 public void onPageSelected(int position) {
                     if(listOfWeatherFragments.size() > position){
-                        visibleWeatherFragment = listOfWeatherFragments.get(position);
+
                         String cityName = listOfPlaces.get(position).getCity();
                         settings.setActuallyDisplayingCity(cityName);
                         sharedPreferenceHelper.saveSettings(settings);
@@ -140,7 +142,7 @@ public class MainActivity extends BaseActivity
                             listOfWeatherFragments.get(i).updatePlace(listOfPlaces.get(i));
                         }
 
-                        mPagerAdapter.notifyDataSetChanged();
+                        //mPagerAdapter.notifyDataSetChanged();
                     }
                 }
 
@@ -313,14 +315,13 @@ public class MainActivity extends BaseActivity
 
             long timeBetweenUpdating = Utils.compareTwoTimeStamps(Utils.getCurrentTimeStamp(), timestampFromDb);
 
-            if(timeBetweenUpdating > 15){
+            if(timeBetweenUpdating > REFRESH_TIME){
                 //Download place informaton
                 new GetWeatherAsyncTask().execute(settings.getActuallyDisplayingCity());
                 waitingLayout(true, null);
                 return;
             }
 
-            visibleWeatherFragment.updatePlace(settings.getPlace());
             setTitle(settings.getActuallyDisplayingCity());
         }
     }
@@ -368,7 +369,14 @@ public class MainActivity extends BaseActivity
                     dbHelper.updateFavourite(place);
                     dbHelper.close();
 
-                    visibleWeatherFragment.updatePlace(settings.getPlace());
+                    listOfPlaces = getFavouritesFromDatabase();
+
+                    for(int i = 0 ; i < listOfWeatherFragments.size() ; i++){
+                        listOfWeatherFragments.get(i).updatePlace(listOfPlaces.get(i));
+                    }
+
+                    mPagerAdapter.notifyDataSetChanged();
+
                     setTitle(settings.getActuallyDisplayingCity());
                     waitingLayout(false, null);
                 }
@@ -400,8 +408,11 @@ public class MainActivity extends BaseActivity
         public Object instantiateItem(ViewGroup container, int position) {
             WeatherFragment fragment = (WeatherFragment) super.instantiateItem(container, position);
 
-            if(!listOfWeatherFragments.contains(fragment))
+            if(!listOfWeatherFragments.contains(fragment)){
                 listOfWeatherFragments.add(fragment);
+                listOfWeatherFragments.get(listOfWeatherFragments.size() - 1)
+                        .updatePlace(listOfPlaces.get(listOfWeatherFragments.size() - 1));
+            }
 
             return fragment;
         }
@@ -410,15 +421,5 @@ public class MainActivity extends BaseActivity
         public int getCount(){
             return listOfPlaces.size();
         }
-
-        @Override
-        public void notifyDataSetChanged() {
-            super.notifyDataSetChanged();
-        }
-
-        //        @Override
-//        public int getItemPosition(Object object) {
-//            return POSITION_NONE;
-//        }
     }
 }

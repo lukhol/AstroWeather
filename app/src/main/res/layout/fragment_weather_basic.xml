@@ -32,4 +32,12 @@
         android:textColor="@color/textColor"
         android:layout_centerHorizontal="true"
         android:text="Storm"/>
+    <TextView
+        android:id="@+id/lastUpdateTimeTextView"
+        android:layout_below="@+id/conditionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/textColor"/>
 </RelativeLayout>

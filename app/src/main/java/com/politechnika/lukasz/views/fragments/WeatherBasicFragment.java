@@ -26,6 +26,8 @@ public class WeatherBasicFragment extends Fragment implements IWeather {
     private TextView temperatureTextView, conditionTextView;
     private ImageView conditionImageView;
 
+    private TextView lastUpdateTimeTextView;
+
     public WeatherBasicFragment() {}
 
     @Override
@@ -40,6 +42,7 @@ public class WeatherBasicFragment extends Fragment implements IWeather {
         temperatureTextView = view.findViewById(R.id.temperatureTextView);
         conditionTextView = view.findViewById(R.id.conditionTextView);
         conditionImageView = view.findViewById(R.id.conditionImageView);
+        lastUpdateTimeTextView = view.findViewById(R.id.lastUpdateTimeTextView);
     }
 
     @Override
@@ -67,5 +70,6 @@ public class WeatherBasicFragment extends Fragment implements IWeather {
         temperatureTextView.setText(temperatureString);
         conditionTextView.setText(conditionString);
         conditionImageView.setImageResource(imageResourceId);
+        lastUpdateTimeTextView.setText(place.getLastUpdateTime());
     }
 }
