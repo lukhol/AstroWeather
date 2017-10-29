@@ -68,6 +68,7 @@ public class WeatherFragment extends Fragment {
         IWeather fragmentWeatherDetails = (IWeather)getChildFragmentManager().findFragmentById(R.id.fragmentWeatherDetails);
         IWeather fragmentWeatherBasic = (IWeather)getChildFragmentManager().findFragmentById(R.id.fragmentWeatherBasic);
         IWeather fragmentWeatherForecast = (IWeather)getChildFragmentManager().findFragmentById(R.id.fragmentWeatherForecast);
+        IWeather fragmentWeatherSunInfo = (IWeather)getChildFragmentManager().findFragmentById(R.id.fragmentWeatherSunInfo);
 
         if(!listOfFragmentComponents.contains(fragmentWeatherDetails))
             listOfFragmentComponents.add(fragmentWeatherDetails);
@@ -77,6 +78,9 @@ public class WeatherFragment extends Fragment {
 
         if(!listOfFragmentComponents.contains(fragmentWeatherForecast))
             listOfFragmentComponents.add(fragmentWeatherForecast);
+
+        if(!listOfFragmentComponents.contains(fragmentWeatherSunInfo))
+            listOfFragmentComponents.add(fragmentWeatherSunInfo);
 
         if(position >= 0 && weatherListener != null)
             weatherListener.requestPlace(position);

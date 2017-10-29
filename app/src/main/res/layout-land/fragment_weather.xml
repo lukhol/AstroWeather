@@ -37,18 +37,28 @@
                 android:id="@+id/fragmentWeatherDetails"
                 tools:layout="@layout/fragment_weather_details"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="2.5dp"
                 android:layout_marginBottom="5dp"/>
             <fragment
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:name="com.politechnika.lukasz.views.fragments.WeatherForecastFragment"
-                android:layout_marginStart="10dp"
+                android:layout_height="match_parent"
+                android:name="com.politechnika.lukasz.views.fragments.WeatherSunInfoFragment"
+                android:layout_marginStart="2.5dp"
                 android:layout_marginEnd="10dp"
-                tools:layout="@layout/fragment_weather_forecast"
-                android:id="@+id/fragmentWeatherForecast"
+                tools:layout="@layout/fragment_weather_sun_info"
+                android:id="@+id/fragmentWeatherSunInfo"
                 android:layout_marginBottom="5dp"/>
         </LinearLayout>
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.politechnika.lukasz.views.fragments.WeatherForecastFragment"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            tools:layout="@layout/fragment_weather_forecast"
+            android:id="@+id/fragmentWeatherForecast"
+            android:layout_marginBottom="5dp"/>
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,93 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.politechnika.lukasz.views.fragments.WeatherSunInfoFragment"
+    android:background="@drawable/frame_background_two"
+    android:layout_margin="10dp"
+    android:padding="5dp">
+    <TextView
+        android:id="@+id/weatherSunInfoTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:text="Sun information"
+        android:layout_margin="5dp"
+        android:textSize="18dp"/>
+    <View
+        android:id="@+id/weatherSunInfoViewSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/textColor"
+        android:layout_below="@+id/weatherSunInfoTitleTextView"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@+id/weatherSunInfoViewSeparator"
+        android:layout_centerVertical="true">
+       <RelativeLayout
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_vertical">
+           <ImageView
+               android:id="@+id/weatherSunriseImageView"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:src="@drawable/ic_sunrise"
+               android:layout_centerHorizontal="true"
+               android:padding="5dp"
+               android:contentDescription="sunrise"/>
+           <TextView
+               android:id="@+id/weatherSunriseTitleTextView"
+               android:layout_below="@+id/weatherSunriseImageView"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textColor="@color/textColor"
+               android:layout_centerHorizontal="true"
+               android:text="Sunrise: "/>
+           <TextView
+               android:id="@+id/weatherSunriseTextView"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/weatherSunriseTitleTextView"
+               android:textColor="@color/textColor"
+               android:layout_centerHorizontal="true"
+               android:text="mock text"/>
+       </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+            <ImageView
+                android:id="@+id/weatherSunsetImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_sunset"
+                android:padding="5dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="sunrise"/>
+            <TextView
+                android:id="@+id/weatherSunsetTitleTextView"
+                android:layout_below="@+id/weatherSunsetImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:layout_centerHorizontal="true"
+                android:text="Sunset: "/>
+            <TextView
+                android:id="@+id/weatherSunsetTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/weatherSunsetTitleTextView"
+                android:textColor="@color/textColor"
+                android:layout_centerHorizontal="true"
+                android:text="mock text"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

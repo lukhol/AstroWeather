@@ -1,6 +1,5 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/frame_background_two"
@@ -19,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@id/detailsTextView"
-        android:background="#FFFFFF"/>
+        android:background="@color/textColor"/>
     <ImageView
         android:id="@+id/detailsImage"
         android:layout_centerVertical="true"
