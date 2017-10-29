@@ -20,7 +20,7 @@ import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.services.DBHelper;
 import com.politechnika.lukasz.services.IWeatherService;
-import com.politechnika.lukasz.views.MyListViewAdapter;
+import com.politechnika.lukasz.views.FavLocationListViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -33,7 +33,7 @@ public class EditFavLocationsActivity extends BaseActivity {;
     ArrayList<Place> listOfLocations;
 
     private ListView locationsListView;
-    private MyListViewAdapter myListViewAdapter;
+    private FavLocationListViewAdapter myListViewAdapter;
     private Button addNewLocationButton;
 
     @Override
@@ -52,7 +52,7 @@ public class EditFavLocationsActivity extends BaseActivity {;
         addNewLocationButton = (Button)findViewById(R.id.addNewLocationButton);
 
 
-        myListViewAdapter = new MyListViewAdapter(getApplicationContext(), listOfLocations);
+        myListViewAdapter = new FavLocationListViewAdapter(getApplicationContext(), listOfLocations);
         locationsListView.setAdapter(myListViewAdapter);
 
         locationsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

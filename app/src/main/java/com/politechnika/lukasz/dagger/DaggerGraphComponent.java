@@ -11,6 +11,9 @@ import com.politechnika.lukasz.views.fragments.MainInfoFragment;
 import com.politechnika.lukasz.views.fragments.MoonFragment;
 import com.politechnika.lukasz.views.fragments.SunFragment;
 import com.politechnika.lukasz.providers.AstroCalculatorProvider;
+import com.politechnika.lukasz.views.fragments.WeatherBasicFragment;
+import com.politechnika.lukasz.views.fragments.WeatherDetailsFragment;
+import com.politechnika.lukasz.views.fragments.WeatherForecastFragment;
 import com.politechnika.lukasz.views.fragments.WeatherFragment;
 
 import javax.inject.Singleton;
@@ -30,6 +33,9 @@ public interface DaggerGraphComponent {
     void inject(EditFavLocationsActivity editFavLocationsActivity);
     void inject(WeatherFragment weatherFragment);
     void inject(TestActivity testActivity);
+    void inject(WeatherDetailsFragment weatherDetailsFragment);
+    void inject(WeatherBasicFragment weatherBasicFragment);
+    void inject(WeatherForecastFragment weatherForecastFragment);
 
     static final class Initializer {
         private Initializer() {

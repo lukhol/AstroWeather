@@ -11,9 +11,9 @@ import com.politechnika.lukasz.models.core.Place;
 
 import java.util.ArrayList;
 
-public class MyListViewAdapter extends ArrayAdapter {
+public class FavLocationListViewAdapter extends ArrayAdapter {
 
-    public MyListViewAdapter(Context context, ArrayList<Place> items) {
+    public FavLocationListViewAdapter(Context context, ArrayList<Place> items) {
         super(context, R.layout.location_listview_row, items);
     }
 

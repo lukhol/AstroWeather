@@ -89,4 +89,5 @@ Cras a ligula a tortor lacinia ornare. Aenean finibus semper rutrum. In ac quam 
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="refresh_time_minutes">Refresh time (minutes):</string>
+    <string name="weather_condition_image">Weather condition image.</string>
 </resources>

@@ -1,0 +1,134 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/frame_background_two"
+    android:layout_margin="10dp"
+    android:padding="5dp">
+    <TextView
+        android:id="@+id/detailsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:layout_margin="5dp"
+        android:textSize="18dp"
+        android:text="Details"/>
+    <View
+        android:id="@+id/detailsViewSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/detailsTextView"
+        android:background="#FFFFFF"/>
+    <ImageView
+        android:id="@+id/detailsImage"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/detailsViewSeparator"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_details"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:contentDescription="Weather details"/>
+    <!-- Pressure: -->
+    <TextView
+        android:id="@+id/pressureTitleTextView"
+        android:layout_margin="5dp"
+        android:layout_below="@id/detailsViewSeparator"
+        android:layout_toEndOf="@id/detailsImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:text="Pressure"/>
+    <TextView
+        android:id="@+id/pressureTextView"
+        android:layout_below="@id/detailsViewSeparator"
+        android:layout_marginEnd="5dp"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="998 hPa"
+        android:textColor="@color/textColor"/>
+    <View
+        android:id="@+id/insideDetailsFirstSeparator"
+        android:layout_below="@id/pressureTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_toEndOf="@id/detailsImage"
+        android:layout_height="0.4dp"
+        android:background="@color/textColor"/>
+
+    <!-- Wind speed: -->
+    <TextView
+        android:id="@+id/windSpeedTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:layout_margin="5dp"
+        android:layout_below="@id/insideDetailsFirstSeparator"
+        android:layout_toEndOf="@id/detailsImage"
+        android:text="Wind speed"/>
+    <TextView
+        android:id="@+id/windVelocityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:text="28 km/h"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/insideDetailsFirstSeparator"
+        android:layout_margin="5dp"/>
+    <View
+        android:id="@+id/insideDetailsSecondSeparator"
+        android:layout_below="@id/windSpeedTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_toEndOf="@id/detailsImage"
+        android:layout_height="0.4dp"
+        android:background="@color/textColor"/>
+
+    <!-- Humidity: -->
+    <TextView
+        android:id="@+id/humidityTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:text="Humidity"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/insideDetailsSecondSeparator"
+        android:layout_toEndOf="@id/detailsImage"/>
+    <TextView
+        android:id="@+id/humidityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:text="87%"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/insideDetailsSecondSeparator"
+        android:layout_margin="5dp"/>
+    <View
+        android:id="@+id/insideDetailsThirdSeparator"
+        android:layout_below="@id/humidityTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_toEndOf="@id/detailsImage"
+        android:layout_height="0.4dp"
+        android:background="@color/textColor"/>
+
+    <!-- Visibility: -->
+    <TextView
+        android:id="@+id/visibilityTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:text="Visibility"
+        android:layout_below="@id/insideDetailsThirdSeparator"
+        android:layout_toEndOf="@id/detailsImage"
+        android:layout_margin="5dp"/>
+    <TextView
+        android:id="@+id/visibilityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:text="17km"
+        android:layout_below="@id/insideDetailsThirdSeparator"
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

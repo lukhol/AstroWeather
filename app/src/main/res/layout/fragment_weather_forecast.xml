@@ -1,0 +1,33 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:background="@drawable/frame_background_two"
+    tools:context="com.politechnika.lukasz.views.fragments.WeatherForecastFragment"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/forecastTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:layout_margin="5dp"
+        android:textSize="18dp"
+        android:text="Forecast"/>
+    <View
+        android:id="@+id/forecastTitleViewSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/textColor"
+        android:layout_below="@id/forecastTitleTextView"/>
+
+    <ListView
+        android:id="@+id/forecastListView"
+        android:layout_below="@id/forecastTitleViewSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"/>
+
+</RelativeLayout>

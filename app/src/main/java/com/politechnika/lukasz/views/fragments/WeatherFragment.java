@@ -18,6 +18,9 @@ import com.politechnika.lukasz.models.core.Settings;
 import com.politechnika.lukasz.services.UnitsConverter;
 import com.politechnika.lukasz.views.activities.BaseActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 public class WeatherFragment extends Fragment {
@@ -28,19 +31,12 @@ public class WeatherFragment extends Fragment {
     private Place place;
     private int position = -1;
     private IWeatherListener weatherListener;
-
-    private TextView temperatureTextView, conditionTextView;
-    private TextView pressureTextView, windVelocityTextView, humidityTextView, visibilityTextView;
-    private ImageView conditionImageView;
+    private List<IWeather> listOfFragmentComponents = new ArrayList<>();
 
     public WeatherFragment() {}
 
     public void setPosition(int position){
         this.position = position;
-    }
-
-    public int getPosition(){
-        return position;
     }
 
     @Override
@@ -55,70 +51,31 @@ public class WeatherFragment extends Fragment {
         this.place = place;
         DaggerApplication.component().inject(this);
 
-        if(temperatureTextView == null || conditionTextView == null || conditionImageView == null){
-            Toast.makeText(DaggerApplication.getDaggerApp().getApplicationContext(), "WeatherFragment null fields.", Toast.LENGTH_SHORT).show();
-            return;
+        for(IWeather weatherFragment : listOfFragmentComponents){
+            weatherFragment.updatePlace(place);
         }
-
-        String temperatureString = place.getWeather().getItem().getCondition().getTemp();
-
-        if(!settings.isCelsius())
-            temperatureString = UnitsConverter.celsiusToFahrenheit(temperatureString, true);
-
-        temperatureString += "°";
-
-        String conditionString = place.getWeather().getItem().getCondition().getText();
-
-        String stringCode = place.getWeather().getItem().getCondition().getCode();
-        Resources resources = DaggerApplication.getDaggerApp().getResources();
-        final int resourceId = resources.getIdentifier("img_" + stringCode, "drawable", DaggerApplication.getDaggerApp().getPackageName());
-
-        String pressureString = place.getWeather().getAtmosphere().getPressure();
-        int dotIndex = pressureString.indexOf(".");
-        pressureString = pressureString.substring(0, dotIndex + 2) + " hPa";
-
-        String humidityString = place.getWeather().getAtmosphere().getHumidity() + " %";
-        String visibilityString = place.getWeather().getAtmosphere().getVisibility();
-        String windVelocity = place.getWeather().getWind().getSpeed();
-
-        if(settings.isKmph()){
-            visibilityString += " km";
-            windVelocity += " km/h";
-        } else{
-            visibilityString = UnitsConverter.celsiusToFahrenheit(visibilityString, true) + " miles";
-            windVelocity = UnitsConverter.kmphToMph(windVelocity, true) + " mph";
-        }
-
-        temperatureTextView.setText(temperatureString);
-        conditionTextView.setText(conditionString);
-        conditionImageView.setImageResource(resourceId);
-        pressureTextView.setText(pressureString);
-        humidityTextView.setText(humidityString);
-        visibilityTextView.setText(visibilityString);
-        windVelocityTextView.setText(windVelocity);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
-        getFieldsById(view);
+
+        IWeather fragmentWeatherDetails = (IWeather)getChildFragmentManager().findFragmentById(R.id.fragmentWeatherDetails);
+        IWeather fragmentWeatherBasic = (IWeather)getChildFragmentManager().findFragmentById(R.id.fragmentWeatherBasic);
+        IWeather fragmentWeatherForecast = (IWeather)getChildFragmentManager().findFragmentById(R.id.fragmentWeatherForecast);
+
+        if(!listOfFragmentComponents.contains(fragmentWeatherDetails))
+            listOfFragmentComponents.add(fragmentWeatherDetails);
+
+        if(!listOfFragmentComponents.contains(fragmentWeatherBasic))
+            listOfFragmentComponents.add(fragmentWeatherBasic);
+
+        if(!listOfFragmentComponents.contains(fragmentWeatherForecast))
+            listOfFragmentComponents.add(fragmentWeatherForecast);
 
         if(position >= 0 && weatherListener != null)
             weatherListener.requestPlace(position);
 
         return view;
     }
-
-    private void getFieldsById(View view){
-        temperatureTextView = view.findViewById(R.id.temperatureTextView);
-        conditionTextView = view.findViewById(R.id.conditionTextView);
-
-        conditionImageView = view.findViewById(R.id.conditionImageView);
-
-        pressureTextView = view.findViewById(R.id.pressureTextView);
-        windVelocityTextView = view.findViewById(R.id.windVelocityTextView);
-        humidityTextView = view.findViewById(R.id.humidityTextView);
-        visibilityTextView = view.findViewById(R.id.visibilityTextView);
-    }
-
 }
