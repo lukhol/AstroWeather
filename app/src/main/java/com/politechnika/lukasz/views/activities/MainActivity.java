@@ -156,7 +156,8 @@ public class MainActivity extends BaseActivity
         if(permissionHelper != null)
             permissionHelper.checkPermission(this);
 
-        createCityMenuItems(getFavouritesFromDatabase());
+        createCityMenuItems(listOfPlaces);
+        resolveWeatherInformation(listOfPlaces);
     }
 
     @Override
