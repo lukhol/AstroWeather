@@ -23,11 +23,11 @@
         android:background="@color/textColor"
         android:layout_below="@id/forecastTitleTextView"/>
 
-    <ListView
-        android:id="@+id/forecastListView"
-        android:layout_below="@id/forecastTitleViewSeparator"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"/>
+        android:scrollbars="horizontal"
+        android:id="@+id/forecastRecycleView"
+        android:layout_below="@id/forecastTitleViewSeparator"/>
 
 </RelativeLayout>
