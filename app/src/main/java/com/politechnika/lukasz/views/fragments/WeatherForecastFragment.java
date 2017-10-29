@@ -60,8 +60,11 @@ public class WeatherForecastFragment extends Fragment implements IWeather{
 
         DaggerApplication.component().inject(this);
 
+        listOfForecastItems.clear();
+
         for(ForecastItem forecastItem : place.getWeather().getItem().getForecast()){
-            listOfForecastItems.add(forecastItem);
+            if(!listOfForecastItems.contains(forecastItem))
+                listOfForecastItems.add(forecastItem);
         }
 
         forecastRecycleViewAdapter.notifyDataSetChanged();
