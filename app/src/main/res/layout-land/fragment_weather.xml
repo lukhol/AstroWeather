@@ -1,0 +1,54 @@
+<ScrollView
+    android:id="@+id/mainContentScrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.politechnika.lukasz.views.fragments.WeatherFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants">
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:name="com.politechnika.lukasz.views.fragments.WeatherBasicFragment"
+            android:id="@+id/fragmentWeatherBasic"
+            tools:layout="@layout/fragment_weather_basic"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="80dp"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <fragment
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:name="com.politechnika.lukasz.views.fragments.WeatherDetailsFragment"
+                android:id="@+id/fragmentWeatherDetails"
+                tools:layout="@layout/fragment_weather_details"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"/>
+            <fragment
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:name="com.politechnika.lukasz.views.fragments.WeatherForecastFragment"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                tools:layout="@layout/fragment_weather_forecast"
+                android:id="@+id/fragmentWeatherForecast"
+                android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

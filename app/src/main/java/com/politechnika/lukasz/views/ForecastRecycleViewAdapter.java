@@ -63,8 +63,8 @@ public class ForecastRecycleViewAdapter extends RecyclerView.Adapter {
 
         forecastViewHolder.forecastImageViewRowItem.setImageResource(imageResourceId);
         forecastViewHolder.weekDayTextViewRowItem.setText(forecastItem.getDay());
-        forecastViewHolder.tempMaxTextViewRowItem.setText(forecastItem.getHigh());
-        forecastViewHolder.tempMinTextViewRowItem.setText(forecastItem.getLow());
+        forecastViewHolder.tempMaxTextViewRowItem.setText(forecastItem.getHigh() + "°");
+        forecastViewHolder.tempMinTextViewRowItem.setText(forecastItem.getLow() + "°");
         forecastViewHolder.conditionTextViewRowItem.setText(forecastItem.getText());
     }
 

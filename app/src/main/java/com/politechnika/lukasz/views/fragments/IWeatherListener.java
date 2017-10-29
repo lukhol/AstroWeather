@@ -6,4 +6,5 @@ package com.politechnika.lukasz.views.fragments;
 
 public interface IWeatherListener {
     void requestPlace(int position);
+    void finish();
 }
