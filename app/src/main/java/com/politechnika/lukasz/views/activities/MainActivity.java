@@ -185,6 +185,16 @@ public class MainActivity extends BaseActivity
     protected void onResume(){
         super.onResume();
         listOfPlaces = getFavouritesFromDatabase();
+        mPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for(int i = 0 ; i < listOfPlaces.size() ; i++){
+                    if(listOfPlaces.get(i).getCity().equals(settings.getActuallyDisplayingCity())){
+                        mPager.setCurrentItem(i, false);
+                    }
+                }
+            }
+        }, 5);
     }
 
     private void createCityMenuItems(List<Place> listOfLocations){
