@@ -119,6 +119,7 @@ public class MainActivity extends BaseActivity
         //ViewPager:
         mPager = (ViewPager)findViewById(R.id.mainViewPager);
         if(mPager != null) {
+            mPager.setCurrentItem(0);
             mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
             mPager.setAdapter(mPagerAdapter);
             mPager.setOffscreenPageLimit(10);
@@ -139,10 +140,11 @@ public class MainActivity extends BaseActivity
                         setTitle(cityName);
 
                         for(int i = 0 ; i < listOfWeatherFragments.size() ; i++){
-                            listOfWeatherFragments.get(i).updatePlace(listOfPlaces.get(i));
+                            WeatherFragment updatingFragment = listOfWeatherFragments.get(i);
+                            updatingFragment.updatePlace(listOfPlaces.get(updatingFragment.getPosition()));
                         }
 
-                        //mPagerAdapter.notifyDataSetChanged();
+                        mPagerAdapter.notifyDataSetChanged();
                     }
                 }
 
@@ -307,7 +309,12 @@ public class MainActivity extends BaseActivity
 
             }
 
-            setTitle(settings.getActuallyDisplayingCity());
+            for(int i = 0 ; i < listOfFavouriteLocations.size() ; i++){
+                if(listOfFavouriteLocations.get(i).getCity().equals(settings.getActuallyDisplayingCity())){
+                    setTitle(settings.getActuallyDisplayingCity());
+                    //mPager.setCurrentItem(i);
+                }
+            }
 
             if(!isOnline()){
                 showInformationDialog("No internet connection.", " You are not connected to the internet. Weather information can be old. Connect to the internet and refresh to be up to date!").show();;
@@ -401,7 +408,6 @@ public class MainActivity extends BaseActivity
             WeatherFragment fragment;
             if(listOfWeatherFragments.size() < position + 1) {
                 fragment = new WeatherFragment();
-                fragment.setPosition(position);
             }
             else{
                 fragment = listOfWeatherFragments.get(position);
@@ -415,9 +421,9 @@ public class MainActivity extends BaseActivity
             WeatherFragment fragment = (WeatherFragment) super.instantiateItem(container, position);
 
             if(!listOfWeatherFragments.contains(fragment)){
+                fragment.setPosition(position);
+                fragment.updatePlace(listOfPlaces.get(position));
                 listOfWeatherFragments.add(fragment);
-                listOfWeatherFragments.get(listOfWeatherFragments.size() - 1)
-                        .updatePlace(listOfPlaces.get(listOfWeatherFragments.size() - 1));
             }
 
             return fragment;
