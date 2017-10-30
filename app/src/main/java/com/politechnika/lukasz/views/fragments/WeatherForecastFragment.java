@@ -48,6 +48,7 @@ public class WeatherForecastFragment extends Fragment implements IWeather{
                 false
         );
         forecastRecycleView.setLayoutManager(linearLayoutManager);
+        forecastRecycleView.setHasFixedSize(true);
 
         forecastRecycleViewAdapter = new ForecastRecycleViewAdapter(listOfForecastItems, forecastRecycleView, settings);
         forecastRecycleView.setAdapter(forecastRecycleViewAdapter);

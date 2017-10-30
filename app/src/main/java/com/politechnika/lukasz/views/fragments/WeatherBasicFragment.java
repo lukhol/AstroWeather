@@ -1,6 +1,9 @@
 package com.politechnika.lukasz.views.fragments;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -69,6 +72,23 @@ public class WeatherBasicFragment extends Fragment implements IWeather {
         temperatureTextView.setText(temperatureString);
         conditionTextView.setText(conditionString);
         conditionImageView.setImageResource(imageResourceId);
-        lastUpdateTimeTextView.setText(place.getLastUpdateTime());
+
+        String lastUpdateTime = place.getLastUpdateTime();
+        lastUpdateTime = "Last update: " + lastUpdateTime;
+
+        if(!isOnline())
+            lastUpdateTimeTextView.setText(lastUpdateTime.substring(0, lastUpdateTime.length() - 4));
+        else
+            lastUpdateTimeTextView.setText("");
+    }
+
+    private boolean isOnline(){
+        ConnectivityManager cm = (ConnectivityManager) DaggerApplication.getDaggerApp().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        if(netInfo != null && netInfo.isConnectedOrConnecting()){
+            return true;
+        }
+        return false;
     }
 }

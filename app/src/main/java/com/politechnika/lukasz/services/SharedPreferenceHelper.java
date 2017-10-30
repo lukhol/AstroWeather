@@ -38,11 +38,6 @@ public class SharedPreferenceHelper implements ISharedPreferenceHelper {
         settings.setLongitude(longitude);
         settings.setRefreshTime(refreshTime);
 
-        DBHelper dbHelper = new DBHelper(DaggerApplication.getDaggerApp().getApplicationContext());
-        Place place = dbHelper.getFavourite(settings.getActuallyDisplayingCity());
-        dbHelper.close();
-        settings.setPlace(place);
-
         return settings;
     }
 

@@ -7,15 +7,6 @@ public class Settings {
     private String actuallyDisplayingCity;
     private boolean kmph;
     private boolean celsius;
-    private Place place;
-
-    public Place getPlace() {
-        return place;
-    }
-
-    public void setPlace(Place place) {
-        this.place = place;
-    }
 
     public float getLongitude() {
         return longitude;

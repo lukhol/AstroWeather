@@ -7,7 +7,9 @@
     <ImageView
         android:id="@+id/forecastImageViewRowItem"
         android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/img_0"/>
     <TextView

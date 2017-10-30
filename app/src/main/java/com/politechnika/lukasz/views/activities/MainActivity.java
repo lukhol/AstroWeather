@@ -136,8 +136,7 @@ public class MainActivity extends BaseActivity
                         String cityName = listOfPlaces.get(position).getCity();
                         settings.setActuallyDisplayingCity(cityName);
                         sharedPreferenceHelper.saveSettings(settings);
-                        resolveWeatherInformation(getFavouritesFromDatabase());
-                        setTitle(cityName);
+                        resolveWeatherInformation(listOfPlaces);
 
                         for(int i = 0 ; i < listOfWeatherFragments.size() ; i++){
                             WeatherFragment updatingFragment = listOfWeatherFragments.get(i);
@@ -271,6 +270,7 @@ public class MainActivity extends BaseActivity
     private void resolveWeatherInformationOnMenuItemClicked(String city){
         settings.setActuallyDisplayingCity(city);
         sharedPreferenceHelper.saveSettings(settings);
+
         for(int i = 0 ; i < listOfPlaces.size() ; i++){
             if(listOfPlaces.get(i).getCity().equals(city)){
                 mPager.setCurrentItem(i);
@@ -282,17 +282,17 @@ public class MainActivity extends BaseActivity
         if(listOfFavouriteLocations == null)
             return;
 
+        //If there are no favourite places set actually displaying city to null
         if(listOfFavouriteLocations.size() == 0){
-            settings.setPlace(null);
             settings.setActuallyDisplayingCity(null);
             sharedPreferenceHelper.saveSettings(settings);
         }
 
+        //If actually displaying city is null and someone added first city then set it in the settings.
         if(settings.getActuallyDisplayingCity() == null){
             if(!listOfFavouriteLocations.isEmpty()){
                 Place firstFavouritePlace = listOfFavouriteLocations.get(0);
                 settings.setActuallyDisplayingCity(firstFavouritePlace.getCity());
-                settings.setPlace(firstFavouritePlace);
                 sharedPreferenceHelper.saveSettings(settings);
             }
         }
@@ -303,12 +303,18 @@ public class MainActivity extends BaseActivity
             //3. Display to the user.
 
             String actuallyDisplayingCityString = settings.getActuallyDisplayingCity();
-            Place actuallyDisplayingCityPlace = settings.getPlace();
+            Place actuallyDisplayingCityPlace = null;//settings.getPlace();
 
-            if(!actuallyDisplayingCityPlace.getCity().equals(actuallyDisplayingCityString)){
-                Place place = getFavouriteFromDatabase(actuallyDisplayingCityString);
-                settings.setPlace(place);
-                actuallyDisplayingCityPlace = place;
+            for(Place tempPlace : listOfFavouriteLocations){
+                if(tempPlace.getCity().equals(actuallyDisplayingCityString)){
+                    actuallyDisplayingCityPlace = tempPlace;
+                    break;
+                }
+            }
+
+            if(actuallyDisplayingCityPlace == null){
+                showToast("Something went wrong.");
+                return;
             }
 
             Timestamp timestampFromDb = null;
@@ -319,10 +325,10 @@ public class MainActivity extends BaseActivity
 
             }
 
+            //Necessary for setting title:
             for(int i = 0 ; i < listOfFavouriteLocations.size() ; i++){
                 if(listOfFavouriteLocations.get(i).getCity().equals(settings.getActuallyDisplayingCity())){
                     setTitle(settings.getActuallyDisplayingCity());
-                    //mPager.setCurrentItem(i);
                 }
             }
 
@@ -341,12 +347,10 @@ public class MainActivity extends BaseActivity
             long timeBetweenUpdating = Utils.compareTwoTimeStamps(Utils.getCurrentTimeStamp(), timestampFromDb);
 
             if(timeBetweenUpdating > REFRESH_TIME){
-                //Download place informaton
+                //Download place information if are older than REFRESH_TIME
                 new GetWeatherAsyncTask().execute(settings.getActuallyDisplayingCity());
                 waitingLayout(true, null);
-                return;
             }
-
         }
     }
 
@@ -382,25 +386,34 @@ public class MainActivity extends BaseActivity
                         place.setLastUpdateTime(Utils.getCurrentTimeStamp().toString());
                         place.setWeather(weather);
                     } catch (Exception e){
-
+                        showToast("Error during parsing downloaded place.");
+                        return;
                     }
 
+                    //Save actually displaying place in settings:
                     settings.setActuallyDisplayingCity(place.getCity());
-                    settings.setPlace(place);
                     sharedPreferenceHelper.saveSettings(settings);
 
+                    //Update just downloaded place in database:
                     DBHelper dbHelper = new DBHelper(getActivity());
                     dbHelper.updateFavourite(place);
                     dbHelper.close();
 
-                    listOfPlaces = getFavouritesFromDatabase();
+                    //Update just downloaded place in listOfPlaces instead of getting all places from database:
+                    for(int j = 0 ; j < listOfPlaces.size() ; j++){
+                        if(listOfPlaces.get(j).getCity().equals(place.getCity())){
+                            listOfPlaces.set(j, place);
+                            break;
+                        }
+                    }
 
+                    //Update each fragments on view pager:
                     for(int i = 0 ; i < listOfWeatherFragments.size() ; i++){
-                        listOfWeatherFragments.get(i).updatePlace(listOfPlaces.get(i));
+                        WeatherFragment updatingFragment = listOfWeatherFragments.get(i);
+                        updatingFragment.updatePlace(listOfPlaces.get(updatingFragment.getPosition()));
                     }
 
                     mPagerAdapter.notifyDataSetChanged();
-
                     setTitle(settings.getActuallyDisplayingCity());
                     waitingLayout(false, null);
                 }
@@ -415,15 +428,10 @@ public class MainActivity extends BaseActivity
 
         @Override
         public Fragment getItem(int position){
-            WeatherFragment fragment;
-            if(listOfWeatherFragments.size() < position + 1) {
-                fragment = new WeatherFragment();
-            }
-            else{
-                fragment = listOfWeatherFragments.get(position);
-            }
-
-            return fragment;
+            if(listOfWeatherFragments.size() < position + 1)
+                return new WeatherFragment();
+            else
+                return listOfWeatherFragments.get(position);
         }
 
         @Override
