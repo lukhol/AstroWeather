@@ -2,12 +2,15 @@ package com.politechnika.lukasz.views.activities;
 
 import com.politechnika.lukasz.R;
 
+import android.app.ActionBar;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.politechnika.lukasz.dagger.DaggerApplication;
+import com.politechnika.lukasz.dagger.MainModule;
 import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Weather;
 import com.politechnika.lukasz.services.DBHelper;
@@ -110,15 +114,23 @@ public class EditFavLocationsActivity extends BaseActivity {;
     }
 
     @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            onBackPressed();
+            //onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     class GetWeatherAsyncTask extends AsyncTask<String, Void, Pair<Weather, String>> {
 

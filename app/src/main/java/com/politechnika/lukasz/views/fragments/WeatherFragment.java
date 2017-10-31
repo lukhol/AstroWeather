@@ -1,23 +1,20 @@
 package com.politechnika.lukasz.views.fragments;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.politechnika.lukasz.R;
 import com.politechnika.lukasz.dagger.DaggerApplication;
 import com.politechnika.lukasz.models.core.Place;
 import com.politechnika.lukasz.models.core.Settings;
-import com.politechnika.lukasz.services.UnitsConverter;
-import com.politechnika.lukasz.views.activities.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,6 @@ public class WeatherFragment extends Fragment {
     @Inject
     Settings settings;
 
-    private Place place;
     private int position = -1;
     private IWeatherListener weatherListener;
     private List<IWeather> listOfFragmentComponents = new ArrayList<>();
@@ -53,7 +49,6 @@ public class WeatherFragment extends Fragment {
     }
 
     public void updatePlace(Place place){
-        this.place = place;
         DaggerApplication.component().inject(this);
 
         for(IWeather weatherFragment : listOfFragmentComponents){
@@ -81,6 +76,25 @@ public class WeatherFragment extends Fragment {
 
         if(!listOfFragmentComponents.contains(fragmentWeatherSunInfo))
             listOfFragmentComponents.add(fragmentWeatherSunInfo);
+
+
+        LinearLayout containerForWeatherBasicFragment = view.findViewById(R.id.containerForWeatherBasicFragment);
+        if(containerForWeatherBasicFragment != null){
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int height = displaymetrics.heightPixels;
+
+            DisplayMetrics dm = getActivity().getApplicationContext().getResources().getDisplayMetrics();
+            int densityDpi = dm.densityDpi;
+            int px = 56 * (densityDpi / 160);
+
+            height -= px;
+
+            LinearLayout.LayoutParams layout_lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, height);
+
+            containerForWeatherBasicFragment.setLayoutParams(layout_lp);
+        }
 
         if(position >= 0 && weatherListener != null)
             weatherListener.requestPlace(position);

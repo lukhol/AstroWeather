@@ -116,6 +116,14 @@ public class MainActivity extends BaseActivity
             listOfWeatherFragments.clear();
         }
 
+        initViewPager();
+        resolveWeatherInformation(listOfPlaces);
+
+        if(permissionHelper != null)
+            permissionHelper.checkPermission(this);
+    }
+
+    private void initViewPager(){
         //ViewPager:
         mPager = (ViewPager)findViewById(R.id.mainViewPager);
         if(mPager != null) {
@@ -153,12 +161,6 @@ public class MainActivity extends BaseActivity
                 }
             });
         }
-
-        if(permissionHelper != null)
-            permissionHelper.checkPermission(this);
-
-        createCityMenuItems(listOfPlaces);
-        resolveWeatherInformation(listOfPlaces);
     }
 
     @Override
@@ -183,7 +185,10 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onResume(){
         super.onResume();
+
         listOfPlaces = getFavouritesFromDatabase();
+        createCityMenuItems(listOfPlaces);
+
         mPager.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -193,7 +198,7 @@ public class MainActivity extends BaseActivity
                     }
                 }
             }
-        }, 5);
+        }, 15);
     }
 
     private void createCityMenuItems(List<Place> listOfLocations){
@@ -313,8 +318,11 @@ public class MainActivity extends BaseActivity
             }
 
             if(actuallyDisplayingCityPlace == null){
-                showToast("Something went wrong.");
-                return;
+                actuallyDisplayingCityPlace = listOfFavouriteLocations.get(0);
+                actuallyDisplayingCityString = actuallyDisplayingCityPlace.getCity();
+                settings.setActuallyDisplayingCity(actuallyDisplayingCityString);
+                sharedPreferenceHelper.saveSettings(settings);
+                showToast("Set first plage from favourites.");
             }
 
             Timestamp timestampFromDb = null;
